@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+{% block content %}
+<hr>
+<h1>Project template</h1>
+
+<ul>
+    {% for auction in auctions %}
+        <li>Title:{{ auction.title }} ------{{ auction.description }}</li>
+    {% endfor %}
+
+</ul>
+
+{% endblock content %}
