@@ -8,7 +8,7 @@
         <li>Title:<a href="{% url 'auction' auction.id %}">{{ auction.title }}</a>
             <br>
             <p>{{ auction.description }}</p>
-            <p>Price: {{ auction.bidding_price }}</p>
+            <p>Price: {{ auction.starting_bid }}</p>
         </li>
     {% endfor %}
 

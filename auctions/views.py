@@ -15,7 +15,7 @@ Listing = [
     {'id': '3',
      'title':"Brand New royal Enfield 250 CC For special Sale",
      'description': 'Korem ipsum dolor amet, consectetur adipiscing elit. Maece nas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla',
-     'bidding_price': '$456.00'},
+     'starting_bid': '$456.00'},
 
 
 ]
