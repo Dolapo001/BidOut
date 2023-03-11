@@ -9,6 +9,7 @@ class Auction(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     start_date = models.DateTimeField(auto_now_add=True)
+    place_bid = models.OneToOneField('Bid', blank=True, related_name='bids', on_delete=models.CASCADE, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
     end_date = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -17,7 +18,25 @@ class Auction(models.Model):
     winner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     is_active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.title
 
-def __str__(self):
-    return self.title
 
+class Bid(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} bid ${self.amount} on {self.auction.title}"
+
+
+class Comment(models.Model):
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment on {self.auction.title} by {self.user.username}"
