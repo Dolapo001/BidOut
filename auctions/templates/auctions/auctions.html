@@ -1,11 +1,15 @@
 {% extends 'main.html' %}
 {% block content %}
 <hr>
-<h1>Project template</h1>
+<h1> Auction List</h1>
 
 <ul>
     {% for auction in auctions %}
-        <li>Title:{{ auction.title }} ------{{ auction.description }}</li>
+        <li>Title:<a href="{% url 'auction' auction.id %}">{{ auction.title }}</a>
+            <br>
+            <p>{{ auction.description }}</p>
+            <p>Price: {{ auction.bidding_price }}</p>
+        </li>
     {% endfor %}
 
 </ul>
