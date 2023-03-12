@@ -2,7 +2,14 @@
 {% block content %}
 <hr>
 <h1> Auction List</h1>
-
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Auction</th>
+        <th>Bid</th>
+        <th>ID</th>
+    </tr>
+</table>
 <ul>
     {% for auction in auctions %}
         <li>Title:<a href="{% url 'auction' auction.id %}">{{ auction.title }}</a>

@@ -6,8 +6,12 @@
 {% for bid in bids %}
     <span style="border:1px solid grey ">{{ bid }}</span>
 {% endfor %}
-<hr>
-<p>{{ auction.description }}</p>
-<br>
-<p>{{ auction.starting_bid }}</p>
+    <hr>
+    <h3>{{ num_bids }} Bids</h3>
+    <hr>
+    <p>{{ auction.description }}</p>
+    <br>
+    <p>{{ auction.starting_bid }}</p>
+
+
 {% endblock content %}
