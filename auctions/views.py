@@ -1,24 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Auction
+from .forms import AuctionForm
 # Create your views here.
 
-
-Listing = [
-    {'id': '1',
-     'title':"Brand New royal Enfield 250 CC For special Sale",
-     'description': 'Korem ipsum dolor amet, consectetur adipiscing elit. Maece nas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla',
-     'bidding_price': '$456.00'},
-    {'id': '2',
-     'title':"Brand New royal Enfield 250 CC For special Sale",
-     'description': 'Korem ipsum dolor amet, consectetur adipiscing elit. Maece nas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla',
-     'bidding_price': '$456.00'},
-    {'id': '3',
-     'title':"Brand New royal Enfield 250 CC For special Sale",
-     'description': 'Korem ipsum dolor amet, consectetur adipiscing elit. Maece nas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla',
-     'starting_bid': '$456.00'},
-
-]
 
 
 def auctions(request, ):
@@ -32,4 +17,10 @@ def auction(request, pk):
     num_bids = auction_obj.bids.count()
     context = {'auction': auction_obj, 'num_bids': num_bids}
     return render(request, 'auctions/single-auction.html', context)
+
+
+def createAuction(request):
+    form = AuctionForm()
+    context = {'form': form}
+    return render(request, "auctions/auction_form.html", context)
 

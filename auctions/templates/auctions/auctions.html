@@ -4,21 +4,22 @@
 <h1> Auction List</h1>
 <table>
     <tr>
-        <th>ID</th>
-        <th>Auction</th>
-        <th>Bid</th>
-        <th>ID</th>
+        <th>Title</th>
+        <th>Created</th>
+        <th>Current Bid</th>
+        <th>Starting Bid</th>
+        <th>Winner</th>
+        <th></th>
     </tr>
-</table>
-<ul>
     {% for auction in auctions %}
-        <li>Title:<a href="{% url 'auction' auction.id %}">{{ auction.title }}</a>
-            <br>
-            <p>{{ auction.description }}</p>
-            <p>Price: {{ auction.starting_bid }}</p>
-        </li>
+    <tr>
+        <td>{{ auction.title }}</td>
+        <td>{{ auction.start_date }}</td>
+        <td>${{ auction.current_bid }}</td>
+        <td>${{ auction.starting_bid }}</td>
+        <td>{{ auction.winner }}</td>
+        <td><a href="{% url 'auction' auction.id %}">View</a></td>
+    </tr>
     {% endfor %}
-
-</ul>
-
+</table>
 {% endblock content %}
