@@ -13,6 +13,7 @@ class Auction(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
     end_date = models.DateTimeField(auto_now=True, null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     winner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)

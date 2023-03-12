@@ -6,6 +6,7 @@
     <tr>
         <th>Title</th>
         <th>Created</th>
+        <th>Price</th>
         <th>Current Bid</th>
         <th>Starting Bid</th>
         <th>Winner</th>
@@ -15,6 +16,7 @@
     <tr>
         <td>{{ auction.title }}</td>
         <td>{{ auction.start_date }}</td>
+        <td>${{ auction.price }}</td>
         <td>${{ auction.current_bid }}</td>
         <td>${{ auction.starting_bid }}</td>
         <td>{{ auction.winner }}</td>
