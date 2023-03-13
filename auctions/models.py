@@ -31,12 +31,12 @@ class Auction(models.Model):
 
 class Bid(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} bid ${self.amount} on {self.auction.title}"
+        return f"{self.bidder.username} bid ${self.amount} on {self.auction.title}"
 
 
 class Comment(models.Model):

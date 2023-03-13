@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Auction
-from .forms import AuctionForm
+from .models import Auction, Bid
+from .forms import AuctionForm, BidForm
+from django.contrib import messages
+from django.db import transaction
+from decimal import Decimal, getcontext
 # Create your views here.
 
 
@@ -30,4 +33,34 @@ def createAuction(request):
 
     context = {'form': form}
     return render(request, "auctions/auction_form.html", context)
+
+
+@transaction.atomic
+def placeBid(request, pk):
+    auction = Auction.objects.get(id=pk)
+    if request.method == 'POST':
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid_amount = form.cleaned_data['bid_amount']
+            if bid_amount > auction.current_bid:
+                getcontext().prec = 10  # Set decimal context with 10 digit precision
+                bid_amount = Decimal(str(bid_amount))  # Convert to Decimal
+                bid = Bid(auction=auction, bidder=request.user, amount=bid_amount)
+                bid.save()
+                auction.current_bid = bid_amount
+                auction.save()
+                return redirect('auction', pk=auction.id)
+            else:
+                messages.error(request, 'Bid must be greater than current bid.')
+    else:
+        form = BidForm()
+    return render(request, 'auctions/place_bid.html', {'form': form, 'auction': auction})
+
+
+
+
+
+
+
+
 
