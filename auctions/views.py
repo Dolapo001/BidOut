@@ -4,6 +4,7 @@ from .models import Auction, Bid
 from .forms import AuctionForm, BidForm
 from django.contrib import messages
 from django.db import transaction
+from django.urls import reverse
 from decimal import Decimal, getcontext
 # Create your views here.
 
@@ -41,6 +42,7 @@ def placeBid(request, pk):
     if request.method == 'POST':
         form = BidForm(request.POST)
         if form.is_valid():
+            form.save()
             bid_amount = form.cleaned_data['bid_amount']
             if bid_amount > auction.current_bid:
                 getcontext().prec = 10  # Set decimal context with 10 digit precision
@@ -49,7 +51,7 @@ def placeBid(request, pk):
                 bid.save()
                 auction.current_bid = bid_amount
                 auction.save()
-                return redirect('auction', pk=auction.id)
+                return redirect('auctions')
             else:
                 messages.error(request, 'Bid must be greater than current bid.')
     else:
