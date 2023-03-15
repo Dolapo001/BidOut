@@ -56,7 +56,8 @@ def placeBid(request, pk):
                 messages.error(request, 'Bid must be greater than current bid.')
     else:
         form = BidForm()
-    return render(request, 'auctions/place_bid.html', {'form': form, 'auction': auction})
+    context = {'form': form, 'auction': auction}
+    return render(request, 'auctions/place_bid.html', context)
 
 
 

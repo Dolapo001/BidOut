@@ -26,7 +26,11 @@ class Auction(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.title, f"${self.price}", f"${self.current_bid}", f"${self.current_bid}"
+        return self.title
+
+    @staticmethod
+    def label_from_instance(instance):
+        return instance.name
 
 
 class Bid(models.Model):
@@ -44,6 +48,12 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # to make sure 2 exact objects don't exist
+        constraints = [
+            models.UniqueConstraint(fields=["user", "auction"], name="unique_user_auction_comment")
+        ]
 
     def __str__(self):
         return f"Comment on {self.auction.title} by {self.user.username}"
