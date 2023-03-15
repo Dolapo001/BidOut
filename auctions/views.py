@@ -4,7 +4,7 @@ from .models import Auction, Bid, Category
 from .forms import AuctionForm, BidForm, CommentForm
 from django.contrib import messages
 from django.db import transaction
-from django.urls import reverse
+from django.db.models import Q
 from decimal import Decimal, getcontext
 # Create your views here.
 
@@ -85,15 +85,22 @@ def placeBid(request, pk):
 
 def categories(request):
     categories = Category.objects.all()
-    return render(request, 'auctions/categories.html', {'categories': categories})
+    context = {'categories': categories}
+    return render(request, 'auctions/categories.html', context)
 
 
-def category_listings(request, pk):
-    category = Category.objects.get(pk=pk)
-    listings = category.listings.filter(is_active=True)
-    return render(request, 'auctions/category_auctions.html', {'category': category, 'listings': listings})
-
-
+def auctionCategory(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    auctions = Auction.objects.filter(category=category, active=True)
+    query = request.GET.get('q')
+    if query:
+        auctions = auctions.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(seller__username__icontains=query)
+        ).distinct()
+    context = {'category': category, 'auctions': auctions}
+    return render(request, 'auctions/auction_category.html', context)
 
 
 
