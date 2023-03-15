@@ -15,7 +15,8 @@ class Category(models.Model):
 class Auction(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
-    featured_image = models.ImageField(null=True, blank=True, default="default.jpg")
+    featured_image = models.ImageField(
+        null=True, blank=True, default="default.jpg")
     start_date = models.DateTimeField(auto_now_add=True)
     place_bid = models.OneToOneField('Bid', blank=True, related_name='bids', on_delete=models.CASCADE, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,

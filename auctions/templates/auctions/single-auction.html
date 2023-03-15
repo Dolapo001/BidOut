@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
+    <img style="max-width: 500px" src="{{ auction.featured_image.url }}">
     <h1>{{ auction.title }}</h1>
     <p>Current price: {{ auction.price }}</p>
     <p>Bids:</p>
