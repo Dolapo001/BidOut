@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.postgres import serializers
 from django.db import models
 import uuid
 
@@ -14,6 +15,7 @@ class Category(models.Model):
 class Auction(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
+    featured_image = models.ImageField(null=True, blank=True, default="default.jpg")
     start_date = models.DateTimeField(auto_now_add=True)
     place_bid = models.OneToOneField('Bid', blank=True, related_name='bids', on_delete=models.CASCADE, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
@@ -50,11 +52,6 @@ class Comment(models.Model):
     text = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        # to make sure 2 exact objects don't exist
-        constraints = [
-            models.UniqueConstraint(fields=["user", "auction"], name="unique_user_auction_comment")
-        ]
-
     def __str__(self):
         return f"Comment on {self.auction.title} by {self.user.username}"
+
