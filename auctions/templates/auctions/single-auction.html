@@ -1,17 +1,29 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1>{{ auction.title }}</h1>
+    <h1>{{ auction.title }}</h1>
+    <p>Current price: {{ auction.price }}</p>
+    <p>Bids:</p>
 <hr>
 {% for bid in bids %}
+
     <span style="border:1px solid grey ">{{ bid }}</span>
+    <li>{{ bid.bidder.username }} - {{ bid.amount }}</li>
+    {% empty %}
+      <li>No bids yet.</li>
+
 {% endfor %}
     <hr>
-    <h3>{{ num_bids }} Bids</h3>
     <hr>
     <p>{{ auction.description }}</p>
     <br>
-    <p>{{ auction.price }}</p>
-
-
+    </ul>
+  <p>Comments:</p>
+  <ul>
+    {% for comment in auction.comments.all %}
+      <li>{{ comment.author.username }} - {{ comment.text }}</li>
+    {% empty %}
+      <li>No comments yet.</li>
+    {% endfor %}
+</ul>
 {% endblock content %}

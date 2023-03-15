@@ -1,12 +1,10 @@
 {% extends 'main.html' %}
+
 {% block content %}
-
-<h1>
-<form method="POST">
-    {% csrf_token%}
+  <h1>Create a New Auction</h1>
+  <form method="post">
+    {% csrf_token %}
     {{ form.as_p }}
-
-    <input type="submit">
-</form>
-</h1>
-{% endblock content %}
+    <button type="submit">Create</button>
+  </form>
+{% endblock %}

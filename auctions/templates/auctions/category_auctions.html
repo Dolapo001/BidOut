@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <h1>{{ category.name }} Auctions</h1>
+  <ul>
+    {% for listing in listings %}
+      <li><a href="{% url 'auction' auction.id %}">{{ listing.title }}</a></li>
+    {% empty %}
+      <li>No active Auction in this category.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

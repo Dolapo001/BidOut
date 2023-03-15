@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Auction, Bid
-from .forms import AuctionForm, BidForm
+from .models import Auction, Bid, Category
+from .forms import AuctionForm, BidForm, CommentForm
 from django.contrib import messages
 from django.db import transaction
 from django.urls import reverse
@@ -17,9 +17,32 @@ def auctions(request, ):
 
 
 def auction(request, pk):
-    auction_obj = Auction.objects.get(id=pk)
-    num_bids = auction_obj.bids.count()
-    context = {'auction': auction_obj, 'num_bids': num_bids}
+    form = CommentForm
+    auction = Auction.objects.get(pk=pk)
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            if 'bid' in request.POST:
+                bid_form = BidForm(request.POST)
+                if bid_form.is_valid():
+                    bid = bid_form.save(commit=False)
+                    bid.bidder = request.user
+                    bid.listing = auction
+                    bid.save()
+                    messages.success(request, 'Bid added successfully.')
+                    return redirect('listing', pk=auction.pk)
+            elif 'comment' in request.POST:
+                Commentform = CommentForm(request.POST)
+                if Commentform.is_valid():
+                    comment = Commentform.save(commit=False)
+                    comment.user = request.user
+                    comment.listing = auction
+                    comment.save()
+                    messages.success(request, 'Comment added successfully.')
+                    return redirect('listing', pk=auction.pk)
+        else:
+            messages.warning(request, 'You must be logged in to bid or comment.')
+    else:
+        context = {'form': form, 'auction': auction, 'CommentForm': CommentForm}
     return render(request, 'auctions/single-auction.html', context)
 
 
@@ -60,7 +83,15 @@ def placeBid(request, pk):
     return render(request, 'auctions/place_bid.html', context)
 
 
+def categories(request):
+    categories = Category.objects.all()
+    return render(request, 'auctions/categories.html', {'categories': categories})
 
+
+def category_listings(request, pk):
+    category = Category.objects.get(pk=pk)
+    listings = category.listings.filter(is_active=True)
+    return render(request, 'auctions/category_auctions.html', {'category': category, 'listings': listings})
 
 
 

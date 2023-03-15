@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <h1>Categories</h1>
+  <ul>
+    {% for category in categories %}
+      <li><a href="{% url 'category_auctions' category.slug %}">{{ category.name }}</a></li>
+    {% empty %}
+      <li>No categories.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
