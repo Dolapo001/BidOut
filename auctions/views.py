@@ -50,7 +50,7 @@ def createAuction(request):
     form = AuctionForm()
 
     if request.method == 'POST':
-        form = AuctionForm(request.POST)
+        form = AuctionForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('auctions')
