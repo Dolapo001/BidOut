@@ -57,9 +57,4 @@ class Comment(models.Model):
         return f"Comment on {self.auction.title} by {self.user.username}"
 
 
-class Watchlist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    Auctions = models.ManyToManyField(Auction)
 
-    def __str__(self):
-        return f"{self.user.username}'s Watchlist"

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Auction, Bid, Category, Watchlist
+from .models import Auction, Bid, Category
 from .forms import AuctionForm, BidForm, CommentForm
 from django.contrib import messages
 from django.db import transaction
@@ -101,13 +101,5 @@ def auctionCategory(request, category_slug):
         ).distinct()
     context = {'category': category, 'auctions': auctions}
     return render(request, 'auctions/auction_category.html', context)
-
-
-def watchlist(request):
-    user_watchlist = Watchlist.objects.get(user=request.user)
-    auction_watchlist = user_watchlist.auction.all()
-    context = {'auction_watchlist': auction_watchlist}
-    return render(request, "auctions/single-auction.html", context)
-
 
 
