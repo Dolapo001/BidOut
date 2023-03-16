@@ -1,5 +1,50 @@
 {% load static %}
 
-<img src="{% static 'images/logo_2.png' %}">
-<a href="{% url 'create-auction' %}">Create Listing</a>
-<hr>
+ <nav class="navbar navbar-expand-lg bg-light fixed-top fs-6">
+      <div class="container-fluid mx-4  d-flex justify-content-space-evenly">
+        <a class="navbar-brand me-auto" href="{% url 'auctions' %}"><img src="{% static 'images/logo_2.png' %}" alt="logo" class="img-fluid"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item mx-2">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+
+            <li class="nav-item mx-2">
+              <!-- same as auction details -->
+              <a class="nav-link" href="{% url 'auctions' %}">Active Listings</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="{% url 'auction' %}">Watch List</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="{% url 'create-auction' %}">Create Listing</a>
+            </li>
+              <li class="nav-item mx-2">
+              <a class="nav-link" href="#">Categories</a>
+            </li>
+            <li class="nav-item dropdown mx-2">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Pages
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="">Login</a></li>
+                <li><a class="dropdown-item" href="">Signup</a></li>
+                <li><a class="dropdown-item" href="">404</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="top-control d-flex text-danger">
+            <a href="./dashboard.html">
+
+              <button class="btn btn-md btn-danger my-3 mt-md-0">My Dashboard</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </nav>
