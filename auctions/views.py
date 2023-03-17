@@ -12,7 +12,6 @@ from decimal import Decimal, getcontext
 
 
 def home(request):
-    # this function selects and displays 6 random items on the main page
     featured_items = Auction.objects.all()
     count = 6
     if featured_items.count() < 6:
@@ -20,6 +19,7 @@ def home(request):
     featured_items = random.sample(list(featured_items), count)
     context = {"featured_items": featured_items}
     return render(request, "Home.html", context)
+
 
 def auctions(request, ):
     auctions = Auction.objects.all()
@@ -112,6 +112,15 @@ def auctionCategory(request, category_slug):
     context = {'category': category, 'auctions': auctions}
     return render(request, 'auctions/auction_category.html', context)
 
+
+def dashboard(request):
+    total_auctions_won = request.user.auction_won.all().count()
+    total_items_listed = request.user.auction.count()
+    total_items_closed = Auction.objects.filter(closed=True, listed_by=request.user).count()
+    total_watchlist_aucti = request.user.watchlists.count()
+    context = {"total_items_won": total_items_won, "total_items_listed": total_items_listed,
+               "total_items_closed": total_items_closed, "total_watchlist_items": total_watchlist_items}
+    return render(request, "auctions/dashboard.html", context)
 
 
 
