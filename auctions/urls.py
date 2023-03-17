@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.auctions, name="auctions"),
+    path('', views.Home, name="home"),
+    path('active-auctions', views.auctions, name="auctions"),
     path('auction/<str:pk>/', views.auction, name="auction"),
     path('create-auction', views.createAuction, name="create-auction"),
     path('place-bid/<str:pk>/', views.placeBid, name="place-bid"),

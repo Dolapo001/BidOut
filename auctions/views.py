@@ -26,25 +26,24 @@ def auction(request, pk):
                 if bid_form.is_valid():
                     bid = bid_form.save(commit=False)
                     bid.bidder = request.user
-                    bid.listing = auction
+                    bid.auction = auction
                     bid.save()
                     messages.success(request, 'Bid added successfully.')
-                    return redirect('listing', pk=auction.pk)
+                    return redirect('auction', pk=auction.pk)
             elif 'comment' in request.POST:
-                Commentform = CommentForm(request.POST)
-                if Commentform.is_valid():
-                    comment = Commentform.save(commit=False)
+                comment_form = CommentForm(request.POST)
+                if comment_form.is_valid():
+                    comment = comment_form.save(commit=False)
                     comment.user = request.user
-                    comment.listing = auction
+                    comment.auction = auction
                     comment.save()
                     messages.success(request, 'Comment added successfully.')
-                    return redirect('listing', pk=auction.pk)
-        else:
-            messages.warning(request, 'You must be logged in to bid or comment.')
-    else:
-        context = {'form': form, 'auction': auction, 'CommentForm': CommentForm}
-    return render(request, 'auctions/single-auction.html', context)
-
+                    return redirect('auction', pk=auction.pk)
+                else:
+                    messages.warning(request, 'You must be logged in to bid or comment.')
+            else:
+                context = {'form': form, 'auction': auction, 'CommentForm': form}
+            return render(request, 'auctions/single-auction.html', context)
 
 def createAuction(request):
     form = AuctionForm()
@@ -102,4 +101,9 @@ def auctionCategory(request, category_slug):
     context = {'category': category, 'auctions': auctions}
     return render(request, 'auctions/auction_category.html', context)
 
+
+def home(request):
+    home = Home
+    context = {'home': home}
+    return render(request, "home.html", context)
 

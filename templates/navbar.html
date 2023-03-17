@@ -11,7 +11,7 @@
 
           <ul class="navbar-nav mx-auto">
             <li class="nav-item mx-2">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link active" href="{% url 'home' %}">Home</a>
             </li>
 
             <li class="nav-item mx-2">
@@ -19,7 +19,7 @@
               <a class="nav-link" href="{% url 'auctions' %}">Active Listings</a>
             </li>
             <li class="nav-item mx-2">
-              <a class="nav-link" href="{% url 'single-auction' %}">Watch List</a>
+              <a class="nav-link" href="">Watch List</a>
             </li>
             <li class="nav-item mx-2">
               <a class="nav-link" href="{% url 'create-auction' %}">Create Listing</a>
@@ -49,3 +49,4 @@
         </div>
       </div>
     </nav>
+

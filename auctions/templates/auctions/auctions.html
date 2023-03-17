@@ -1,28 +1,71 @@
 {% extends 'main.html' %}
 {% block content %}
+
+
+<div class="container-fluid bg-danger py-5 text-white">
+        <div class="row pt-5">
+            <div class="col-12 col-lg-10">
+                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Active Listings</h1>
+            </div>
+        </div>
+    </div>
+
 <hr>
-<h1> Auction List</h1>
 <table>
-    <tr>
-        <th>Live Auctions</th>
-        <th>Created</th>
-        <th>Price</th>
-        <th>Current Bid</th>
-        <th>Starting Bid</th>
-        <th>Winner</th>
-        <th></th>
-    </tr>
+
     {% for auction in auctions %}
     <tr>
-        <td>{{ auction.title }}</td>
-        <td>{{ auction.start_date }}</td>
-        <td>${{ auction.price }}</td>
-        <td>${{ auction.current_bid }}</td>
-        <td>${{ auction.starting_bid }}</td>
-        <td>{{ auction.winner }}</td>
+
         <td><a href="{% url 'auction' auction.id %}">View</a></td>
         <td><a href="{% url 'place-bid' auction.id %}">Place Bid</a></td>
     </tr>
     {% endfor %}
 </table>
+
+
+
+    <!-- Live Auction -->
+    <div class="container-fluid">
+
+      <div class="row mx-5 mb-5 p-3">
+        <!-- i think if you are gonna have multiple items, continous html blocks would be unhealthy, so you can use whater=ver function you have under your sleeves to replicate one column from  -->
+        <!-- Here ...Start -->
+          {% for auction in auctions %}
+
+        <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
+          <div class=" p-3 auction border border-outline-1">
+            <div class="auction-photo">
+                <a href="{% url 'auction' auction.id %}" class="auction">
+              <img src="{{ auction.featured_image.url }}" alt="auction-1" class="img-fluid">
+              <p class="fw-bold auction-time text-danger bg-white m-0 p-3 mx-auto">-124D :23H : 02M : 53S</p>
+            </div>
+            <div class="auction">
+              <h3 class="text-start fs-4">{{ auction.title }}</h3>
+
+              <div class="auctioner my-3 d-flex justify-content-between">
+                <div class="user d-flex align-items-center">
+                  <img src="./static/images/auction-authr1.png" alt="auction author" class="img-fluid me-3">
+                  <p class="">By Sara Alexa</p>
+                </div>
+                <h4 class="text-danger">${{ auction.price }}</h4>
+              </div>
+              <div class="auction-action d-flex align-items-center justify-content-between">
+                <a href="{% url 'place-bid' auction.id %}">
+                    <button class="btn btn-md btn-danger">Place a Bid</button>
+                </a>
+
+
+                <div class="action-btns d-flex justify-content-between">
+                  <i class="fa fa-2x text-secondary fa-solid fa-heart me-3"></i>
+                  <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          {% endfor %}
+      </div>
+    </div>
+
 {% endblock content %}

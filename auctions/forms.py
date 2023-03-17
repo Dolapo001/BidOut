@@ -36,3 +36,5 @@ class CommentForm:
             self.auction = kwargs.pop('auction', None)
             super().__init__(*args, **kwargs)
 
+
+

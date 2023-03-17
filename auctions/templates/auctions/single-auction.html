@@ -1,11 +1,25 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
+
+    <div class="container-fluid bg-danger py-5 text-white">
+        <div class="row pt-5">
+            <div class="col-12 col-lg-10">
+                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Active Listing</h1>
+            </div>
+        </div>
+    </div>
+
+
+
     <img style="max-width: 500px" src="{{ auction.featured_image.url }}">
     <h1>{{ auction.title }}</h1>
-    <p>Current price: {{ auction.price }}</p>
-    <p>Bids:</p>
-<hr>
+    <p>Price: {{ auction.price }}</p>
+    <p>Created on: {{ auction.start_date }}</p>
+    <p>Current bid: {{ auction.current_bid }}</p>
+    <p>{{ auction.description }}</p>
+
 {% for bid in bids %}
 
     <span style="border:1px solid grey ">{{ bid }}</span>
@@ -14,11 +28,8 @@
       <li>No bids yet.</li>
 
 {% endfor %}
-    <hr>
-    <hr>
-    <p>{{ auction.description }}</p>
+
     <br>
-    </ul>
   <p>Comments:</p>
   <ul>
     {% for comment in auction.comments.all %}
