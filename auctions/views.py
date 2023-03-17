@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Auction, Bid, Category
@@ -9,6 +11,16 @@ from decimal import Decimal, getcontext
 # Create your views here.
 
 
+
+def home(request):
+    # this function selects and displays 6 random items on the main page
+    featured_items = Auction.objects.all()
+    count = 6
+    if featured_items.count() < 6:
+        count = featured_items.count()
+    featured_items = random.sample(list(featured_items), count)
+    context = {"featured_items": featured_items}
+    return render(request, "Home.html", context)
 
 def auctions(request, ):
     auctions = Auction.objects.all()
@@ -102,8 +114,5 @@ def auctionCategory(request, category_slug):
     return render(request, 'auctions/auction_category.html', context)
 
 
-def home(request):
-    home = Home
-    context = {'home': home}
-    return render(request, "home.html", context)
+
 
