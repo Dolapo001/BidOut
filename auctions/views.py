@@ -11,7 +11,6 @@ from decimal import Decimal, getcontext
 # Create your views here.
 
 
-
 def home(request):
     # this function selects and displays 6 random items on the main page
     featured_items = Auction.objects.all()
