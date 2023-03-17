@@ -113,14 +113,6 @@ def auctionCategory(request, category_slug):
     return render(request, 'auctions/auction_category.html', context)
 
 
-def dashboard(request):
-    total_auctions_won = request.user.auction_won.all().count()
-    total_items_listed = request.user.auction.count()
-    total_items_closed = Auction.objects.filter(closed=True, listed_by=request.user).count()
-    total_watchlist_aucti = request.user.watchlists.count()
-    context = {"total_items_won": total_items_won, "total_items_listed": total_items_listed,
-               "total_items_closed": total_items_closed, "total_watchlist_items": total_watchlist_items}
-    return render(request, "auctions/dashboard.html", context)
 
 
 
