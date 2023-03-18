@@ -10,18 +10,6 @@
         </div>
     </div>
 
-<hr>
-<table>
-
-    {% for auction in auctions %}
-    <tr>
-
-        <td><a href="{% url 'auction' auction.id %}">View</a></td>
-        <td><a href="{% url 'place-bid' auction.id %}">Place Bid</a></td>
-    </tr>
-    {% endfor %}
-</table>
-
 
 
     <!-- Live Auction -->

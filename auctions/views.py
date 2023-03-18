@@ -1,7 +1,7 @@
 import random
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import Http404
 from .models import Auction, Bid, Category
 from .forms import AuctionForm, BidForm, CommentForm
 from django.contrib import messages
@@ -28,34 +28,11 @@ def auctions(request, ):
 
 
 def auction(request, pk):
-    form = CommentForm
-    auction = Auction.objects.get(pk=pk)
-    if request.method == 'POST':
-        if request.user.is_authenticated:
-            if 'bid' in request.POST:
-                bid_form = BidForm(request.POST)
-                if bid_form.is_valid():
-                    bid = bid_form.save(commit=False)
-                    bid.bidder = request.user
-                    bid.auction = auction
-                    bid.save()
-                    messages.success(request, 'Bid added successfully.')
-                    return redirect('auction', pk=auction.pk)
-            elif 'comment' in request.POST:
-                comment_form = CommentForm(request.POST)
-                if comment_form.is_valid():
-                    comment = comment_form.save(commit=False)
-                    comment.user = request.user
-                    comment.auction = auction
-                    comment.save()
-                    messages.success(request, 'Comment added successfully.')
-                    return redirect('auction', pk=auction.pk)
-                else:
-                    messages.warning(request, 'You must be logged in to bid or comment.')
-            else:
-                context = {'form': form, 'auction': auction, 'CommentForm': form}
-            return render(request, 'auctions/single-auction.html', context)
-
+        auction = get_object_or_404(Auction, id=pk)
+        context = {
+            'auction': auction
+        }
+        return render(request, 'auctions/single-auction.html', context)
 def createAuction(request):
     form = AuctionForm()
 
@@ -75,16 +52,16 @@ def placeBid(request, pk):
     if request.method == 'POST':
         form = BidForm(request.POST)
         if form.is_valid():
-            form.save()
             bid_amount = form.cleaned_data['bid_amount']
             if bid_amount > auction.current_bid:
-                getcontext().prec = 10  # Set decimal context with 10 digit precision
-                bid_amount = Decimal(str(bid_amount))  # Convert to Decimal
+                getcontext().prec = 10
+                bid_amount = Decimal(str(bid_amount))
                 bid = Bid(auction=auction, bidder=request.user, amount=bid_amount)
                 bid.save()
                 auction.current_bid = bid_amount
                 auction.save()
-                return redirect('auctions')
+                form.save()
+                return redirect('auction')
             else:
                 messages.error(request, 'Bid must be greater than current bid.')
     else:
@@ -97,6 +74,13 @@ def categories(request):
     categories = Category.objects.all()
     context = {'categories': categories}
     return render(request, 'auctions/categories.html', context)
+
+
+def dashboard(request, dashboard=None):
+    dashboard = dashboard.objects.all()
+    context = {'dashboard': dashboard}
+    return render(request, 'auctions/dashboard.html', context)
+
 
 
 def auctionCategory(request, category_slug):

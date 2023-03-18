@@ -40,4 +40,171 @@
         </div>
       </div>
     </div>
-{% endblock content %}
+   <div class="row mx-5 mb-5 p-3">
+        <!-- i think if you are gonna have multiple items, continous html blocks would be unhealthy, so you can use whater=ver function you have under your sleeves to replicate one column from  -->
+        <!-- Here ...Start -->
+       {% for auction in auctions %}
+        <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
+          <div class=" p-3 auction border border-outline-1">
+            <div class="auction-photo">
+              <a href="{% url 'auction' auction.id %}" class="auction">
+              <img src="{{ auction.featured_image.url }}" alt="auction-1" class="img-fluid">
+              <p class="fw-bold auction-time text-danger bg-white m-0 p-3 mx-auto">-124D :23H : 02M : 53S</p>
+            </div>
+            <div class="auction-details">
+              <h3 class="text-start fs-4">{{ auction.featured_image.url }}</h3>
+
+              <div class="auctioner my-3 d-flex justify-content-between">
+                <div class="user d-flex align-items-center">
+                  <img src="./static/images/auction-authr1.png" alt="auction author" class="img-fluid me-3">
+                  <p class="">By Sara Alexa</p>
+                </div>
+
+                <h4 class="text-danger">${{ auction.price }}</h4>
+              </div>
+              <div class="auction-action d-flex align-items-center justify-content-between">
+
+                <a href="{% url 'place-bid' auction.id %}">
+                    <button class="btn btn-md btn-danger">Place a Bid</button>
+              </div>
+                <div class="action-btns d-flex justify-content-between">
+                  <i class="fa fa-2x text-secondary fa-solid fa-heart me-3"></i>
+                  <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
+                </div>
+            </div>
+          </div>
+        </div>
+         {% endfor %}
+    <div class="container-fluid mb-5 pb-5">
+      <div class="row text-center">
+        <div class="col-2 d-none d-lg-block">
+        </div>
+        <div class="col-12 col-lg-8 my-5">
+          <h1>What Clients Say</h1>
+          <p class="mx-5 px-5">Explore on the world's best & largest Bidding marketplace with our beautiful Bidding products. We want to be a part of your smile, success and future growth.</p>
+        </div>
+        <div class="col-2 d-none d-lg-block">
+        </div>
+      </div>
+
+
+      <div class="row mx-5 px-3">
+
+        <div class="col-12 col-md-6 col-lg-4 p-2">
+          <div class="testimonial p-3">
+            <div class="img-group d-flex justify-content-between">
+              <div class="test-desc d-grid">
+                <img src="./assets/images/testi1.png" alt="testi1" class="testimonial-img img-fluid mb-3">
+                <h5 class="mb-0">Johan Martin R</h5>
+                <p><small>CEO Founder</small></p>
+              </div>
+              <img src="./assets/images/lg_icons/quote-red.svg" alt="quote" class="img-fluid align-self-start">
+            </div>
+            <div class="testimonial-text">
+              <p><em>Maecenas vitae porttitor neque, ac porttitor nunc. Duis venenatis lacinia libero. Nam nec augue ut nunc vulputate tincidunt at suscipit nunc.</em></p>
+            </div>
+          </div>
+        </div>
+
+         <!-- Trustees -->
+    <div class="container-fluid trustees pb-5 mb-5">
+      <div class="row py-5">
+        <div class="col-3 d-none d-md-block"></div>
+        <div class="col-12 col-md-6 text-center">
+          <h1>Trusted by 500+ Companies</h1>
+          <p>Explore on the world's best & largest Bidding marketplace with our beautiful Bidding products. We want to be a part of your smile, success and future growth.</p>
+        </div>
+        <div class="col-3 d-none d-md-block"></div>
+      </div>
+
+      <div class="row companies text-center px-5 mx-5 pb-5">
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor1.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor2.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor3.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor4.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor5.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor6.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor3.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor8.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor9.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor6.png" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor8.png" alt="" class="img-fluid">
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
+          <img src="./assets/images/sponsor2.png" alt="" class="img-fluid">
+        </div>
+
+      </div>
+
+
+    </div>
+          {%  endblock content%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

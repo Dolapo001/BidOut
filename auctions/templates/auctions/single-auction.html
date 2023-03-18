@@ -26,6 +26,9 @@
     <li>{{ bid.bidder.username }} - {{ bid.amount }}</li>
     {% empty %}
       <li>No bids yet.</li>
+    <a href="{% url 'place-bid' auction.id %}">
+        <button class="btn btn-md btn-danger">Place a Bid</button>
+    </a>
 
 {% endfor %}
 
@@ -36,6 +39,7 @@
       <li>{{ comment.author.username }} - {{ comment.text }}</li>
     {% empty %}
       <li>No comments yet.</li>
+      <button type="submit">Add Comment</button>
     {% endfor %}
 </ul>
 {% endblock content %}

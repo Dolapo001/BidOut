@@ -8,6 +8,7 @@ urlpatterns = [
     path('create-auction', views.createAuction, name="create-auction"),
     path('place-bid/<str:pk>/', views.placeBid, name="place-bid"),
     path('categories/', views.categories, name='categories'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('categories/<str:category>/', views.auctionCategory, name='auction-category'),
 
  ]
