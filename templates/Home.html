@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block content %}
   <!-- Header Section -->
@@ -19,7 +20,7 @@
         </div>
 
         <div class="col-12 col-md-12 col-lg-5 py-5 align-items-center">
-          <img src="./static/images/chayka-boredapeclub.jpg" alt="Bored Ape" class="img-fluid">
+          <img src="{% static 'images/chayka-boredapeclub.jpg' %}" alt="Bored Ape" class="img-fluid">
         </div>
       </div>
 
@@ -56,7 +57,7 @@
 
               <div class="auctioner my-3 d-flex justify-content-between">
                 <div class="user d-flex align-items-center">
-                  <img src="./static/images/auction-authr1.png" alt="auction author" class="img-fluid me-3">
+                  <img src="{% static 'images/author1.png' %}" alt="auction author" class="img-fluid me-3">
                   <p class="">By Sara Alexa</p>
                 </div>
 
@@ -94,17 +95,162 @@
           <div class="testimonial p-3">
             <div class="img-group d-flex justify-content-between">
               <div class="test-desc d-grid">
-                <img src="./assets/images/testi1.png" alt="testi1" class="testimonial-img img-fluid mb-3">
+                <img src="{% static 'images/testi1.png' %}" alt="testi1" class="testimonial-img img-fluid mb-3">
                 <h5 class="mb-0">Johan Martin R</h5>
                 <p><small>CEO Founder</small></p>
               </div>
-              <img src="./assets/images/lg_icons/quote-red.svg" alt="quote" class="img-fluid align-self-start">
+              <img src="{% static 'images/lg_icons/quote-red.svg' %}" alt="quote" class="img-fluid align-self-start">
             </div>
             <div class="testimonial-text">
               <p><em>Maecenas vitae porttitor neque, ac porttitor nunc. Duis venenatis lacinia libero. Nam nec augue ut nunc vulputate tincidunt at suscipit nunc.</em></p>
             </div>
           </div>
         </div>
+
+        <div class="col-12 col-md-6 col-lg-4 p-2">
+          <div class="testimonial p-3">
+            <div class="img-group d-flex justify-content-between">
+              <div class="test-desc d-grid">
+                <img src="{% static 'images/testi1.png' %}" alt="testi1" class="testimonial-img img-fluid mb-3">
+                <h5 class="mb-0">Johan Martin R</h5>
+                <p><small>CEO Founder</small></p>
+              </div>
+              <img src="{% static 'images/lg_icons/quote-red.svg' %}" alt="quote" class="img-fluid align-self-start">
+            </div>
+            <div class="testimonial-text">
+              <p><em>Maecenas vitae porttitor neque, ac porttitor nunc. Duis venenatis lacinia libero. Nam nec augue ut nunc vulputate tincidunt at suscipit nunc.</em></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 p-2">
+          <div class="testimonial p-3">
+            <div class="img-group d-flex justify-content-between">
+              <div class="test-desc d-grid">
+                <img src="{% static 'images/testi1.png' %}" alt="testi1" class="testimonial-img img-fluid mb-3">
+                <h5 class="mb-0">Johan Martin R</h5>
+                <p><small>CEO Founder</small></p>
+              </div>
+              <img src="{% static 'images/lg_icons/quote-red.svg' %}" alt="quote" class="img-fluid align-self-start">
+            </div>
+            <div class="testimonial-text">
+              <p><em>Maecenas vitae porttitor neque, ac porttitor nunc. Duis venenatis lacinia libero. Nam nec augue ut nunc vulputate tincidunt at suscipit nunc.</em></p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- Upcoming Auction -->
+    <div class="container-fluid pb-5">
+      <div class="row mx-5 mb-5">
+        <div class="col-12 col-lg-7">
+          <h1>Upcoming Auctions</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum tempore possimus consectetur laboriosam excepturi eveniet non quaerat nulla voluptatem praesentium</p>
+        </div>
+      </div>
+
+      <div class="row m-5">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="upcoming-item border border-outline-1">
+            <div class="issue ">
+              <!-- image should be here...not literally -->
+              <img src="{% static 'images/umcoming2.png' %}" alt="upcoming 1" class="img-fluid w-100">
+
+              <div class="upcoming-timer text-center bg-black text-white d-flex justify-content-center px-3 py-2">
+                <div class="days col"><b>-125</b><br>Days</div>
+                <div class="days col"><b>23</b><br>Hours</div>
+                <div class="days col"><b>02</b><br>Mins</div>
+                <div class="days col"><b>53</b><br>Secs</div>
+              </div>
+
+            </div>
+            <div class="issue-desc px-2 pt-2">
+              <div class="upcoming-author px-2 py-2">
+                 <img src="{% static 'images/upcoming-author1.png' %}" alt="upcoming author" class=" px-2 pb-1 pt-2 img-fluid">
+                <p class="fw-bold">Time Zone</p>
+                <h4>Christian Louboutin Size 45</h4>
+                <p class="">Bidding Price: <b class="text-danger fw-bold fs-4">$10.89</b> </p>
+                <div class="auction-action d-flex align-items-center justify-content-between mb-4">
+
+                  <button class="btn btn-md btn-danger">View Details</button>
+
+                  <div class="action-btns d-flex justify-content-between">
+                    <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="upcoming-item border border-outline-1">
+            <div class="issue ">
+              <!-- image should be here...not literally -->
+              <img src="{% static 'images/umcoming3.png' %}" alt="upcoming 1" class="img-fluid w-100">
+
+              <div class="upcoming-timer text-center bg-black text-white d-flex justify-content-center px-3 py-2">
+                <div class="days col"><b>-125</b><br>Days</div>
+                <div class="days col"><b>23</b><br>Hours</div>
+                <div class="days col"><b>02</b><br>Mins</div>
+                <div class="days col"><b>53</b><br>Secs</div>
+              </div>
+
+            </div>
+            <div class="issue-desc px-2 pt-2">
+              <div class="upcoming-author px-2 py-2">
+                <img src="{% static 'images/upcoming-author2.png' %}" alt="upcoming author" class=" px-2 pb-1 pt-2 img-fluid">
+                <p class="fw-bold">Time Zone</p>
+                <h4>Yamaha Accelerate Two 600hp</h4>
+                <p class="">Bidding Price: <b class="text-danger fw-bold fs-4">$200.99</b> </p>
+                <div class="auction-action d-flex align-items-center justify-content-between mb-4">
+
+                  <button class="btn btn-md btn-danger">View Details</button>
+
+                  <div class="action-btns d-flex justify-content-between">
+                    <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="upcoming-item border border-outline-1">
+            <div class="issue ">
+              <!-- image should be here...not literally -->
+              <img src=".{% static 'images/umcoming1.png' %}" alt="upcoming 1" class="img-fluid w-100">
+
+              <div class="upcoming-timer text-center bg-black text-white d-flex justify-content-center px-3 py-2">
+                <div class="days col"><b>-125</b><br>Days</div>
+                <div class="days col"><b>23</b><br>Hours</div>
+                <div class="days col"><b>02</b><br>Mins</div>
+                <div class="days col"><b>53</b><br>Secs</div>
+              </div>
+
+            </div>
+            <div class="issue-desc px-2 pt-2">
+              <div class="upcoming-author px-2 py-2">
+                <img src="{% static 'images/upcoming-author3.png' %}" alt="upcoming author" class=" px-2 pb-1 pt-2 img-fluid">
+                <p class="fw-bold">Time Zone</p>
+                <h4>Micheal Kors Watch m2016</h4>
+                <p class="">Bidding Price: <b class="text-danger fw-bold fs-4">$15.99</b> </p>
+                <div class="auction-action d-flex align-items-center justify-content-between mb-4">
+
+                  <button class="btn btn-md btn-danger">View Details</button>
+
+                  <div class="action-btns d-flex justify-content-between">
+                    <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
 
          <!-- Trustees -->
     <div class="container-fluid trustees pb-5 mb-5">
@@ -119,41 +265,41 @@
 
       <div class="row companies text-center px-5 mx-5 pb-5">
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor1.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor1.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor2.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor2.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor3.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor3.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor4.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor4.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor5.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor5.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor6.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor6.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor3.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor7.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor8.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor8.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor9.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor9.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor6.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor4.png' %}" alt="" class="img-fluid">
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor8.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor8.png' %}" alt="" class="img-fluid">
         </div>
 
         <div class="col-6 col-md-4 col-lg-2 mb-3 text-center">
-          <img src="./assets/images/sponsor2.png" alt="" class="img-fluid">
+          <img src="{% static 'images/sponsor2.png' %}" alt="" class="img-fluid">
         </div>
 
       </div>
