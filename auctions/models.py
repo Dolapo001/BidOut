@@ -1,8 +1,9 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.contrib.postgres import serializers
 from django.db import models
 from autoslug import AutoSlugField
 import uuid
+
 
 
 # Create your models here.
@@ -33,7 +34,7 @@ class Auction(models.Model):
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, default=None, related_name="auctions")
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
-    winner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    winner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -46,7 +47,7 @@ class Auction(models.Model):
 
 class Bid(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
+    bidder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bids")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -56,7 +57,7 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
