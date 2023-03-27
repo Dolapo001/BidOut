@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.db.models import Q
 from decimal import Decimal, getcontext
+
 # Create your views here.
 
 
@@ -34,6 +35,8 @@ def auction(request, pk):
             'auction': auction
         }
         return render(request, 'auctions/single-auction.html', context)
+
+
 def createAuction(request):
     form = AuctionForm()
 
