@@ -76,12 +76,6 @@ def categories(request):
     return render(request, 'auctions/categories.html', context)
 
 
-def dashboard(request, dashboard=None):
-    dashboard = dashboard.objects.all()
-    context = {'dashboard': dashboard}
-    return render(request, 'auctions/dashboard.html', context)
-
-
 
 def auctionCategory(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
