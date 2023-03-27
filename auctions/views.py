@@ -1,8 +1,9 @@
 import random
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
-from .models import Auction, Bid, Category
+from .models import Auction, Bid, Category, Watchlist
 from .forms import AuctionForm, BidForm, CommentForm
 from django.contrib import messages
 from django.db import transaction
@@ -91,6 +92,24 @@ def auctionCategory(request, category_slug):
     return render(request, 'auctions/auction_category.html', context)
 
 
+@login_required
+def watchlist(request):
+    watchlist_items = Watchlist.objects.filter(user=request.user)
+    context = {'watchlist_items': watchlist_items}
+    return render(request, 'auctions/watchlist.html', context)
 
+
+@login_required
+def add_to_watchlist(request, pk):
+    watchlist_item = Watchlist(user=request.user, pk=id)
+    watchlist_item.save()
+    return redirect('watchlist')
+
+
+@login_required
+def remove_from_watchlist(request, pk):
+    watchlist_item = Watchlist.objects.get(user=request.user, pk=id)
+    watchlist_item.delete()
+    return redirect('watchlist')
 
 

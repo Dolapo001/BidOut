@@ -1,23 +1,34 @@
+
+
 from django.conf import settings
 from django.contrib.postgres import serializers
 from django.db import models
 from autoslug import AutoSlugField
 import uuid
-
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.utils.text import slugify
 
 
 # Create your models here.
 class Category(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    name = models.CharField(max_length=255, null=True)
-    slug = AutoSlugField(populate_from="name", always_update=True, unique=True, default='')
+    name = models.CharField(max_length=255, null=True, unique=True)
+    slug = AutoSlugField(populate_from="name", unique=True, always_update=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Category"
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = "Categories"
+        ordering = ["name"]
 
     def __str__(self):
         return str(self.name)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Auction(models.Model):
@@ -34,7 +45,7 @@ class Auction(models.Model):
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, default=None, related_name="auctions")
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
-    winner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    winner = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -47,7 +58,7 @@ class Auction(models.Model):
 
 class Bid(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    bidder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bids")
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -57,7 +68,7 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -65,4 +76,7 @@ class Comment(models.Model):
         return f"Comment on {self.auction.title} by {self.user.username}"
 
 
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
 
