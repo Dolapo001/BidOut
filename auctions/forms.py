@@ -30,8 +30,6 @@ class BidForm(ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
 
-
-
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
         if amount and amount <= self.auction.current_bid:
