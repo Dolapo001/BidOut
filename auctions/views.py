@@ -74,33 +74,21 @@ def placeBid(request, pk):
     return render(request, 'auctions/place_bid.html', context)
 
 
-def categories(request):
+def category_list(request):
     categories = Category.objects.all()
-    context = {'categories': categories}
-    return render(request, 'auctions/categories.html', context)
+    return render(request, "auctions/categories.html", {"categories": categories})
 
 
-
-def auctionCategory(request, category_slug):
-    category = get_object_or_404(Category, slug=category_slug)
-    auctions = Auction.objects.filter(category=category, active=True)
-    query = request.GET.get('q')
-    if query:
-        auctions = auctions.filter(
-            Q(title__icontains=query) |
-            Q(description__icontains=query) |
-            Q(seller__username__icontains=query)
-        ).distinct()
-    context = {'category': category, 'auctions': auctions}
-    return render(request, 'auctions/auction_category.html', context)
-
+def category_auctions(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    active_auctions = category.auction_set.filter(is_active=True)
+    return render(request, "auctions/category_auctions.html", {"category": category, "active_auctions": active_auctions})
 
 @login_required
 def watchlist(request):
     watchlist_items = Watchlist.objects.filter(user=request.user)
     context = {'watchlist_items': watchlist_items}
     return render(request, 'auctions/watchlist.html', context)
-
 
 @login_required
 def add_to_watchlist(request, pk):

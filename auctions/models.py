@@ -1,5 +1,3 @@
-
-
 from django.conf import settings
 from django.contrib.postgres import serializers
 from django.db import models
@@ -10,15 +8,10 @@ from django.utils import timezone
 from django.utils.text import slugify
 from users.models import User
 
-# Create your models here.
-
 
 class Category(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    name = models.CharField(max_length=255, null=True, unique=True)
-    slug = AutoSlugField(populate_from="name", unique=True, always_update=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=255, unique=True)
+    slug = AutoSlugField(populate_from='name', unique=True)
 
     class Meta:
         verbose_name = "Category"
@@ -32,7 +25,6 @@ class Category(models.Model):
         self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
 
-
 class Auction(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -45,9 +37,8 @@ class Auction(models.Model):
     end_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, default=None, related_name="auctions")
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
-    winner = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -82,3 +73,5 @@ class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.user.username}'s Watchlist"

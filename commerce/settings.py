@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'auctions.apps.AuctionsConfig',
     'users.apps.UsersConfig',
     'autoslug',
+    'signal'
 
 ]
 AUTH_USER_MODEL = 'users.User'

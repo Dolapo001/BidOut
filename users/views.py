@@ -14,7 +14,6 @@ def dashboard(request):
 
 # Create your views here.
 
-@login_excluded(redirect_to="home")
 def login_view(request):
     if request.method == "POST":
 
@@ -42,7 +41,6 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("home"))
 
 
-@login_excluded(redirect_to="home")
 def register(request, **extra_fields):
     if request.method == "POST":
         first_name = request.POST["first-name"]

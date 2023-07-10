@@ -19,7 +19,7 @@
                         <p>Don't have an account? <a class="fw-bold text-danger" href="{% url 'register' %}">Sign up Here!</a></p>
                     </div>
                     <div class="form-body">
-                        <form action="#" class="">
+                        <form action="{% url 'login' %}" method="post" class="">
                            <div class="vstack gap-3 m-0 p-0">
                             <div class="">
                                 <span>
