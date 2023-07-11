@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.shortcuts import render, redirect
 from .models import User
+from django.views.decorators.csrf import csrf_protect
+
 
 User = get_user_model()
 
@@ -9,10 +11,8 @@ def dashboard(request):
     return render(request, "users/dashboard.html")
 
 
+@csrf_protect
 def login_view(request):
-
-    if request.user.is_authenticated:
-        return redirect('dashboard')
     if request.method == 'POST':
         email_or_username = request.POST['email_or_username']
         password = request.POST['password']
@@ -24,7 +24,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return redirect('home')
         else:
             print('Username/email or password is incorrect')
 
