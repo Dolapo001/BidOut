@@ -32,9 +32,12 @@
                 Pages
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                {% if request.user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
                 <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
-                <li><a class="dropdown-item" href="{% url 'register' %}">Signup</a></li>
-                <li><a class="dropdown-item" href="">404</a></li>
+                <li><a class="dropdown-item" href="#">Signup</a></li>
+                {% endif %}
               </ul>
             </li>
           </ul>
