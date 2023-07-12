@@ -4,6 +4,7 @@ from .models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
+from .forms import AbstractUserSIForm
 
 
 User = get_user_model()
@@ -41,11 +42,20 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    messages.error(request, 'User was logged out!')
+    messages.error(request, 'User has been logged out.')
     return redirect('login')
 
 
 def signup_view(request):
     page = 'register'
+    form = UserSignupForm()
+    if request.method == 'POST':
+        form = UserSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            messages.success(request, 'User account has been created!')
+
     context = {'page': page}
     return render(request, 'users/signup.html', context)

@@ -1,20 +1,38 @@
 {% extends 'main.html' %}
 {% block content %}
-
-
 <div class="container-fluid bg-danger py-5 text-white">
-        <div class="row pt-5">
-            <div class="col-12 col-lg-10">
-                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Create Listings</h1>
-            </div>
+    <div class="row pt-5">
+        <div class="col-12 col-lg-10">
+            <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Create Listings</h1>
         </div>
     </div>
+</div>
 
-
-  <h1>Create a New Auction</h1>
-  <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-md btn-danger">Create</button>
-  </form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-10 col-md-8">
+            <h1 class="mb-4">Create a New Auction</h1>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    {{ form.description }}
+                </div>
+                <div class="mb-3">
+                    <label for="starting_bid" class="form-label">Starting Bid</label>
+                    {{ form.starting_bid }}
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    {{ form.image }}
+                </div>
+                <button class="btn btn-md btn-danger">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
