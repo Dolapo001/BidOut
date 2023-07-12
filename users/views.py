@@ -13,20 +13,22 @@ def dashboard(request):
 
 @csrf_protect
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     if request.method == 'POST':
-        email_or_username = request.POST['email_or_username']
+        username = request.POST['username']
         password = request.POST['password']
         try:
-            user = User.objects.get(email=email_or_username)
+            user = User.objects.get(email=username)
         except User.DoesNotExist:
-            print('Username or Email does not exist')
-        user = authenticate(request, email=email_or_username, password=password)
-
+            print('Username does not exist')
+        user = authenticate(request=request, username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            print('Username/email or password is incorrect')
+            print('Username or password is incorrect')
 
     return render(request, 'users/login.html')
 
