@@ -14,7 +14,7 @@
                 <div class="col-10 col-md-6 signup-form px-5 py-2">
                     <div class="form-head text-center mb-5">
                         <h3>Get Logged In</h3>
-                        <p>Don't have an account? <a class="fw-bold text-danger" href="#">Sign up Here!</a></p>
+                        <p>Don't have an account? <a class="fw-bold text-danger" href="{% url 'signup' %}">Sign up Here!</a></p>
                     </div>
                     <div class="form-body">
                         <form action="{% url 'login' %}" method="POST">

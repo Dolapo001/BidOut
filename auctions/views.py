@@ -36,7 +36,7 @@ def auction(request, pk):
         }
         return render(request, 'auctions/single-auction.html', context)
 
-
+@login_required(login_url="login")
 def createAuction(request):
     form = AuctionForm()
 
@@ -49,7 +49,7 @@ def createAuction(request):
     context = {'form': form}
     return render(request, "auctions/auction_form.html", context)
 
-
+@login_required(login_url="login")
 @transaction.atomic
 def placeBid(request, pk):
     auction = Auction.objects.get(id=pk)
@@ -73,31 +73,31 @@ def placeBid(request, pk):
     context = {'form': form, 'auction': auction}
     return render(request, 'auctions/place_bid.html', context)
 
-
+@login_required(login_url="login")
 def category_list(request):
     categories = Category.objects.all()
     return render(request, "auctions/categories.html", {"categories": categories})
 
-
+@login_required(login_url="login")
 def category_auctions(request, slug):
     category = get_object_or_404(Category, slug=slug)
     active_auctions = category.auction_set.filter(is_active=True)
     return render(request, "auctions/category_auctions.html", {"category": category, "active_auctions": active_auctions})
 
-@login_required
+@login_required(login_url="login")
 def watchlist(request):
     watchlist_items = Watchlist.objects.filter(user=request.user)
     context = {'watchlist_items': watchlist_items}
     return render(request, 'auctions/watchlist.html', context)
 
-@login_required
+@login_required(login_url="login")
 def add_to_watchlist(request, pk):
     watchlist_item = Watchlist(user=request.user, pk=id)
     watchlist_item.save()
     return redirect('watchlist')
 
 
-@login_required
+@login_required(login_url="login")
 def remove_from_watchlist(request, pk):
     watchlist_item = Watchlist.objects.get(user=request.user, pk=id)
     watchlist_item.delete()
