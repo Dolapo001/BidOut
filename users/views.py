@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, get_user_model, logout
-from django.shortcuts import render, redirect
-from .models import User
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
-from .forms import AbstractUserSIForm
-
+from django.contrib.auth import get_user_model
+from users.models import User
+from django.contrib.auth.models import User
 
 User = get_user_model()
 
@@ -46,16 +48,28 @@ def logout_view(request):
     return redirect('login')
 
 
-def signup_view(request):
-    page = 'register'
-    form = UserSignupForm()
-    if request.method == 'POST':
-        form = UserSignupForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            messages.success(request, 'User account has been created!')
+def signup_View(request, **extra_fields):
+    if request.method == "POST":
+        first_name = request.POST.get("first-name")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
 
-    context = {'page': page}
-    return render(request, 'users/signup.html', context)
+        password = request.POST.get("password")
+        confirmation = request.POST.get("confirmation")
+        if password != confirmation:
+            messages.error(request, "Passwords don't match")
+            return render(request, 'users/signup.html')
+
+        try:
+            user_fields = {**extra_fields, "first_name": first_name}
+            user = User.objects.create_user(username, email, password, **user_fields)
+            user.save()
+        except IntegrityError:
+            messages.info(request, "Username has already been taken")
+            return render(request, "users/signup.html")
+
+        login(request, user)
+        messages.success(request, "Logged in successfully")
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        return render(request, "users/signup.html")

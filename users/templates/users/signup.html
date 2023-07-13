@@ -20,9 +20,10 @@
                 <div class="form-body">
                     <form action="{% url 'signup' %}" method="post">
                         {% csrf_token %}
+
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name*</label>
-                            <input type="text" name="firstname" id="firstName" class="form-control" required>
+                            <input type="text" name="first-name" id="firstName" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Your Email*</label>
@@ -35,6 +36,10 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Password*</label>
                             <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmation" class="form-label">Confirmation*</label>
+                            <input type="password" name="confirmation" id="confirmation" class="form-control" required>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" name="termsApply" id="termsApply" class="form-check-input" required>
