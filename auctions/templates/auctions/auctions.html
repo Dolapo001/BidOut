@@ -17,8 +17,6 @@
     <div class="container-fluid">
 
       <div class="row mx-5 mb-5 p-3">
-        <!-- i think if you are gonna have multiple items, continous html blocks would be unhealthy, so you can use whater=ver function you have under your sleeves to replicate one column from  -->
-        <!-- Here ...Start -->
           {% for auction in auctions %}
 
         <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
@@ -43,6 +41,12 @@
                     <button class="btn btn-md btn-danger">Place a Bid</button>
                 </a>
 
+                <form action="#" method="POST">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-link text-decoration-none">
+                        <i class="fa fa-2x text-danger fa-solid fa-heart me-3"></i>
+                    </button>
+                </form>
 
                 <div class="action-btns d-flex justify-content-between">
                   <i class="fa fa-2x text-secondary fa-solid fa-heart me-3"></i>

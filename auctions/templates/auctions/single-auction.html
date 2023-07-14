@@ -2,44 +2,79 @@
 
 {% block content %}
 
-
-    <div class="container-fluid bg-danger py-5 text-white">
-        <div class="row pt-5">
-            <div class="col-12 col-lg-10">
-                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Active Listing</h1>
-            </div>
+<div class="container-fluid bg-danger py-5 text-white">
+    <div class="row pt-5">
+        <div class="col-12 col-lg-10">
+            <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Active Listing</h1>
         </div>
     </div>
+</div>
+<div class="row mx-0 mx-md-5 p-2">
+            <div class="col-12 border col-md-4 text-center">
+                <img src="{{ auction.featured_image.url }}" alt="auc1" class="img-fluid py-5">
+            </div>
+            <div class="col-12 col-md-8 border p-3">
+                <div class="auction-detail">
+                    <h4 class="fw-bold">{{ auction.title }}</h4>
+                    <p>{{ auction.description }}</p>
+
+                    <p class="fs-5">Created on: <span class="bidding-price text-danger">{{ auction.start_date }}</span></p>
+                    <p class="fs-5">Category: <span class="bidding-price text-danger">{{ auction.category }}</span></p>
+                    <p class="fs-5">Bidding Price: <span class="bidding-price text-danger">${{ auction.price }}</span></p>
+                    <p class="fs-5">Number of Bids: <span class="bidding-price text-danger">{{ num_bids }}</span></p>
+                    <p class="fs-5">Current Bid: <span class="bidding-price text-danger">${{ auction.current_bid }}</span></p>
+
+                </div>
+               <div class="bid-control bg-light pt-3 px-3">
+    <p class="fw-bold">Place your bid now</p>
+<p>Bid Amount:</p>
+<form method="POST" action="{% url 'auction' pk=auction.id %}" class="d-grid gap-3">
+    {% csrf_token %}
+    <input type="number" name="bid_amount" id="bid-price" placeholder="$0.00" class="form-control" required>
+    <div class="text-center text-md-start">
+        {% for bid in bids %}
+            <span class="border border-gray">{{ bid }}</span>
+            <li>{{ bid.user.username }} - {{ bid.amount }}</li>
+        {% empty %}
+        {% endfor %}
+        <button type="submit" class="btn btn-success mb-3 px-3">Place bid</button>
+    </div>
+</form>
+            {% for watchlist_item in user.watchlist_auction.all %}
+                <span class="border border-gray">{{ watchlist_item }}</span>
+                <li>{{ watchlist_item.title }}</li>
+            {% empty %}
+            {% endfor %}
+            <button type="submit" class="btn btn-success mb-3 px-3">Add to Watchlist</button>
+        </div>
+    </form>
+</div>
 
 
 
-    <img style="max-width: 500px" src="{{ auction.featured_image.url }}">
-    <h1>{{ auction.title }}</h1>
-    <p>Price: {{ auction.price }}</p>
-    <p>Created on: {{ auction.start_date }}</p>
-    <p>Current bid: {{ auction.current_bid }}</p>
-    <p>{{ auction.description }}</p>
+    <!-- Comment section -->
+    <div class="mt-5">
+        <h2>Comments</h2>
+        {% for comment in comments %}
+            <div class="border p-3 my-3">
+                <p>{{ comment.text }}</p>
+                <p>Posted by: {{ comment.user.username }} at {{ comment.timestamp }}</p>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
 
-{% for bid in bids %}
+    <!-- Comment submission form -->
+    {% if user.is_authenticated %}
+        <form class="mt-5" method="POST" action="{% url 'auction' pk=auction.id %}">
+            {% csrf_token %}
+            <textarea class="form-control" name="comment" required></textarea>
+            <button class="btn btn-danger mt-3" type="submit">Submit Comment</button>
+        </form>
+    {% else %}
+        <p>Please sign in to leave a comment.</p>
+    {% endif %}
+</div>
 
-    <span style="border:1px solid grey ">{{ bid }}</span>
-    <li>{{ bid.bidder.username }} - {{ bid.amount }}</li>
-    {% empty %}
-      <li>No bids yet.</li>
-    <a href="{% url 'place-bid' auction.id %}">
-        <button class="btn btn-md btn-danger">Place a Bid</button>
-    </a>
-
-{% endfor %}
-
-    <br>
-  <p>Comments:</p>
-  <ul>
-    {% for comment in auction.comments.all %}
-      <li>{{ comment.author.username }} - {{ comment.text }}</li>
-    {% empty %}
-      <li>No comments yet.</li>
-      <button type="submit">Add Comment</button>
-    {% endfor %}
-</ul>
 {% endblock content %}

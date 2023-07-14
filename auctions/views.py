@@ -2,13 +2,10 @@ import random
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
-from .models import Auction, Bid, Category, Watchlist
-from .forms import AuctionForm, BidForm, CommentForm
+from .models import Auction, Bid, Category, Watchlist, Comment
+from .forms import AuctionForm
 from django.contrib import messages
-from django.db import transaction
-from django.db.models import Q
-from decimal import Decimal, getcontext
+from django.db.models import Max
 
 # Create your views here.
 
@@ -30,14 +27,40 @@ def auctions(request, ):
 
 
 def auction(request, pk):
-        auction = get_object_or_404(Auction, id=pk)
-        context = {
-            'auction': auction
-        }
-        return render(request, 'auctions/single-auction.html', context)
+    auction = get_object_or_404(Auction, pk=pk)
+    bids = auction.bids.all()
+    highest_bid = bids.order_by('-amount').first()
+    num_bids = bids.count()
+
+    if request.method == 'POST':
+        if 'bid_amount' in request.POST:
+            bid_amount = float(request.POST['bid_amount'])
+            if bid_amount >= auction.starting_bid and (highest_bid is None or bid_amount > highest_bid.amount):
+                auction.current_bid = bid_amount
+                auction.save()
+                bid = Bid(auction=auction, bidder=request.user, amount=bid_amount)
+                bid.save()
+            else:
+                messages.error(request, "Your bid amount must be greater than the current highest bid.")
+        elif 'comment' in request.POST:
+            comment_content = request.POST['comment']
+            comment = Comment(auction=auction, user=request.user, text=comment_content)
+            comment.save()
+        return redirect('auction_detail', pk=pk)
+
+    comments = Comment.objects.filter(auction=auction)
+    context = {
+        'auction': auction,
+        'comments': comments,
+        'num_bids': num_bids,
+        'highest_bid': highest_bid.amount if highest_bid else None,
+        'current_bid': auction.current_bid,
+    }
+    return render(request, 'auctions/single-auction.html', context)
 
 @login_required(login_url="login")
 def createAuction(request):
+
     form = AuctionForm()
 
     if request.method == 'POST':
@@ -49,29 +72,6 @@ def createAuction(request):
     context = {'form': form}
     return render(request, "auctions/auction_form.html", context)
 
-@login_required(login_url="login")
-@transaction.atomic
-def placeBid(request, pk):
-    auction = Auction.objects.get(id=pk)
-    if request.method == 'POST':
-        form = BidForm(request.POST)
-        if form.is_valid():
-            bid_amount = form.cleaned_data['bid_amount']
-            if bid_amount > auction.current_bid:
-                getcontext().prec = 10
-                bid_amount = Decimal(str(bid_amount))
-                bid = Bid(auction=auction, bidder=request.user, amount=bid_amount)
-                bid.save()
-                auction.current_bid = bid_amount
-                auction.save()
-                form.save()
-                return redirect('auction')
-            else:
-                messages.error(request, 'Bid must be greater than current bid.')
-    else:
-        form = BidForm()
-    context = {'form': form, 'auction': auction}
-    return render(request, 'auctions/place_bid.html', context)
 
 @login_required(login_url="login")
 def category_list(request):

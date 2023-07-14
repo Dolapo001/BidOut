@@ -10,18 +10,15 @@
             </div>
         </div>
     </div>
-       <div class="container-fluid mt-5 p-2">
-           {% for auction in auctions %}
-        <!-- multiple bid items should iterate over this block of code -->
-        <div class="row mx-0 mx-md-5 p-2">
+    <div class="row mx-0 mx-md-5 p-2">
             <div class="col-12 border col-md-4 text-center">
-                <img src="{{ auction.featured_image.url }}" alt="auc1" class="img-fluid py-5">
+                <img src="./assets/images/live-auc3.png" alt="auc1" class="img-fluid py-5">
             </div>
             <div class="col-12 col-md-8 border p-3">
                 <div class="auction-detail">
-                    <h4 class="fw-bold">${{ auction.title }}</h4>
-                    <p>{{ auction.description }}</p>
-                    <p class="fs-5">Bidding Price: <span class="bidding-price text-danger">${{ auction.price }}</span></p>
+                    <h4 class="fw-bold">Brand New royal Enfield 250 CC For special Sale</h4>
+                    <p>Korem ipsum dolor amet, consectetur adipiscing elit. Maece nas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
+                    <p class="fs-5">Bidding Price: <span class="bidding-price text-danger">$456.00</span></p>
                 </div>
                 <div class="bid-control bg-light pt-3 px-3">
                     <p class="fw-bold">Place your bid now</p>
@@ -34,9 +31,7 @@
                         </div>
                     </form>
                 </div>
-                {% endfor %}
             </div>
-
         </div>
 
 {% endblock content %}
