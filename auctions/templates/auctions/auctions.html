@@ -22,7 +22,7 @@
         <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
           <div class=" p-3 auction border border-outline-1">
             <div class="auction-photo">
-                <a href="{% url 'auction' auction.id %}" class="auction">
+
               <img src="{{ auction.featured_image.url }}" alt="auction-1" class="img-fluid">
               <p class="fw-bold auction-time text-danger bg-white m-0 p-3 mx-auto">-124D :23H : 02M : 53S</p>
             </div>
@@ -41,17 +41,12 @@
                     <button class="btn btn-md btn-danger">Place a Bid</button>
                 </a>
 
-                <form action="#" method="POST">
+                <form action="{% url 'add_to_watchlist' auction.id %}" method="POST">
                 {% csrf_token %}
                     <button type="submit" class="btn btn-link text-decoration-none">
-                        <i class="fa fa-2x text-danger fa-solid fa-heart me-3"></i>
+                        <button class="btn btn-md btn-danger">Add to watchlist</button>
                     </button>
                 </form>
-
-                <div class="action-btns d-flex justify-content-between">
-                  <i class="fa fa-2x text-secondary fa-solid fa-heart me-3"></i>
-                  <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
-                </div>
               </div>
             </div>
           </div>

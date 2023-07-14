@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.contrib.postgres import serializers
 from django.db import models
 from autoslug import AutoSlugField
 import uuid
@@ -25,6 +23,8 @@ class Category(models.Model):
         self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
 
+
+
 class Auction(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -40,9 +40,12 @@ class Auction(models.Model):
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
 
     @staticmethod
     def label_from_instance(instance):

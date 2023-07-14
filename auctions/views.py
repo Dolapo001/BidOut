@@ -1,6 +1,7 @@
 import random
 
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Auction, Bid, Category, Watchlist, Comment
 from .forms import AuctionForm
@@ -26,11 +27,22 @@ def auctions(request, ):
     return render(request, 'auctions/auctions.html', context)
 
 
+
 def auction(request, pk):
     auction = get_object_or_404(Auction, pk=pk)
     bids = auction.bids.all()
     highest_bid = bids.order_by('-amount').first()
     num_bids = bids.count()
+    auction_winner = None
+
+    if auction.closed:
+        if request.user == auction.seller and highest_bid:
+            auction_winner = highest_bid.bidder
+            messages.success(request, "The auction has been closed. You are the winner!")
+        elif request.user == auction.aeller and not highest_bid:
+            messages.info(request, "The auction has been closed, but there are no bids.")
+        elif request.user == highest_bid.bidder:
+            messages.info(request, "You have won this auction!")
 
     if request.method == 'POST':
         if 'bid_amount' in request.POST:
@@ -55,8 +67,10 @@ def auction(request, pk):
         'num_bids': num_bids,
         'highest_bid': highest_bid.amount if highest_bid else None,
         'current_bid': auction.current_bid,
+        'auction_winner': auction_winner,
     }
     return render(request, 'auctions/single-auction.html', context)
+
 
 @login_required(login_url="login")
 def createAuction(request):
@@ -90,17 +104,61 @@ def watchlist(request):
     context = {'watchlist_items': watchlist_items}
     return render(request, 'auctions/watchlist.html', context)
 
+
 @login_required(login_url="login")
 def add_to_watchlist(request, pk):
-    watchlist_item = Watchlist(user=request.user, pk=id)
-    watchlist_item.save()
+    auction = get_object_or_404(Auction, pk=pk)
+    watchlist_item, created = Watchlist.objects.get_or_create(user=request.user, auction=auction)
+
+    if created:
+        messages.success(request, "Item added to watchlist.")
+    else:
+        messages.info(request, "Item is already in the watchlist.")
+
     return redirect('watchlist')
+
 
 
 @login_required(login_url="login")
 def remove_from_watchlist(request, pk):
-    watchlist_item = Watchlist.objects.get(user=request.user, pk=id)
-    watchlist_item.delete()
+    watchlist_items = Watchlist.objects.filter(user=request.user, auction_id=pk)
+    if watchlist_items.exists():
+        watchlist_items.delete()
+        messages.success(request, "Item removed from watchlist.")
+    else:
+        messages.error(request, "Item not found in watchlist.")
     return redirect('watchlist')
 
 
+
+
+@login_required(login_url="login")
+def close_auction(request, pk):
+    auction = get_object_or_404(Auction, pk=pk)
+
+    # Check if the user is the creator of the auction
+    if auction.seller != request.user:
+        return HttpResponseForbidden("You are not allowed to close this auction.")
+
+    # Check if the auction is already closed
+    if not auction.is_active:
+        return HttpResponseBadRequest("This auction is already closed.")
+
+    # Get the highest bidder and set them as the winner
+    bids = auction.bids.all()
+    highest_bid = bids.order_by('-amount').first()
+    if highest_bid:
+        auction.winner = highest_bid.bidder
+        # Check if the current user is the winner and store the information in a session variable
+        if request.user == highest_bid.bidder:
+            request.session['auction_winner'] = True
+        else:
+            request.session['auction_winner'] = False
+    else:
+        auction.winner = None
+
+    # Update the auction status as closed and save the changes
+    auction.is_active = False
+    auction.save()
+
+    return redirect('auction_detail', pk=pk)

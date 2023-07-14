@@ -10,6 +10,10 @@ class Command(BaseCommand):
             'Fashion',
             'Electronics',
             'Autos',
+            'Toys',
+            'Music',
+            'Plants',
+            'Cards',
             # Add more categories as needed
         ]
 
