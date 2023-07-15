@@ -9,7 +9,7 @@ from .models import Auction, Bid, Category, Watchlist, Comment
 from .forms import AuctionForm
 from django.contrib import messages
 from django.db.models import Max
-
+from decimal import Decimal, getcontext
 # Create your views here.
 
 
@@ -36,7 +36,7 @@ def auction(request, pk):
     highest_bid = bids.order_by('-amount').first()
     num_bids = bids.count()
     auction_winner = None
-
+    getcontext().prec = 10
     if auction.closed:
         if request.user == auction.seller and highest_bid:
             auction_winner = highest_bid.bidder

@@ -59,23 +59,26 @@
 
 
             <div class="auction-action d-flex align-items-center justify-content-between">
-                {% if user.is_authenticated and user == auction.seller %}
-                    {% if auction.is_active %}
-                        <form action="{% url 'close_auction' pk=auction.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger mb-3 px-3">Close Auction</button>
-                        </form>
-                    {% else %}
-                        <p class="text-danger">Auction Closed</p>
-                        {% if auction.winner == user %}
-                            <p class="text-success">Congratulations! You won this auction.</p>
-                        {% else %}
-                            <p class="text-danger">You did not win this auction.</p>
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                {% endif %}
+    {% if user.is_authenticated and user == auction.seller %}
+        {% if auction.is_active %}
+            <form action="{% url 'close_auction' pk=auction.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mb-3 px-3">Close Auction</button>
+            </form>
+        {% else %}
+            <p class="text-danger">Auction Closed</p>
+            {% if request.session.auction_winner %}
+                <p class="text-success">Congratulations! You won this auction.</p>
+            {% else %}
+                <p class="text-danger">You did not win this auction.</p>
+            {% endif %}
+
+        {% endif %}
+    {% else %}
+        <!-- ... existing code ... -->
+    {% endif %}
             </div>
+
 
             </div>
             <!-- Comment section -->
