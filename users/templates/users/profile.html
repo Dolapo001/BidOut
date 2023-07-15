@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="container-fluid bg-danger py-5 text-white">
+        <div class="row pt-5">
+            <div class="col-12 col-lg-10">
+                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">My Profile</h1>
+            </div>
+        </div>
+    </div>
+    <main>
+    <div class="col dashboard-list py-3 px-4 border my-3 bg-danger text-white">HI, you're signed in as {{ user.username }}</div>
+        <div class="container">
+            <div class="row py-5">
+                <div class="col-12 col-md-3">
+
+                    <a href="{% url 'logout' %}">
+                        <div class="col dashboard-list py-3 px-4 border my-3 bg-danger text-white">Logout</div>
+                    </a>
+                </div>
+                 <div class="col-12 col-md-9 my-3">
+                    <div class="row m-0">
+                        <div class="col-12 col-md-6 p-0 dashboard-item mb-4 border">
+                            <h5 class="bg-black px-4 py-3 text-white">
+                                Number of Auctions in Watchlist
+                            </h5>
+                            <div class="order-pending px-4 py-4">
+                                <h3 class="display-5 fw-bold">{{ watchlist_count }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 p-0 dashboard-item mb-4 border">
+                            <h5 class="bg-black px-4 py-3 text-white">
+                                Number of Closed Auctions
+                            </h5>
+                            <div class="order-pending px-4 py-4">
+                                <h3 class="display-5 fw-bold">{{ closed_auctions_count }}</h3>
+                            </div>
+                        </div>
+                       <div class="col-12 p-0 dashboard-item mb-4 border">
+                            <h5 class="bg-black px-4 py-3 text-white">
+                                Auctions Won by {{ user.username }}
+                            </h5>
+                            <div class="order-pending px-4 py-4">
+                                {% if auctions_won_count > 0 %}
+                                    <p>Number of Auctions Won: {{ auctions_won_count }}</p>
+                                    <ul>
+                                        {% for auction in auctions_won %}
+                                            <li><a href="{% url 'user_auctions' auction.seller.username %}">{{ auction.title }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>No auctions won yet.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

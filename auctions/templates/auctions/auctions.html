@@ -31,8 +31,13 @@
 
               <div class="auctioner my-3 d-flex justify-content-between">
                 <div class="user d-flex align-items-center">
-                  <img src="/static/images/author1.png" alt="auction author" class="img-fluid me-3">
-                  <p class="">By Sara Alexa</p>
+                  {% if auction.seller.username %}
+                      <p class=""><a href="{% url 'user_auctions' auction.seller.username %}">By {{ auction.seller.username }}</a></p>
+                  {% else %}
+                      <p class="">By Anonymous</p>
+                  {% endif %}
+
+
                 </div>
                 <h4 class="text-danger">${{ auction.price }}</h4>
               </div>

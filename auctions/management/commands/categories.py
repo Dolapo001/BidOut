@@ -17,8 +17,11 @@ class Command(BaseCommand):
             # Add more categories as needed
         ]
 
+        excluded_categories = ['ToysMusicPlantsCards']
+
         # Create categories
         for category_name in categories:
-            Category.objects.get_or_create(name=category_name)
+            if category_name not in excluded_categories:
+                Category.objects.get_or_create(name=category_name)
 
         self.stdout.write(self.style.SUCCESS('Categories populated successfully.'))

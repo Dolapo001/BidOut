@@ -41,6 +41,7 @@ class Auction(models.Model):
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
+    winner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='winner_auctions')
     closed = models.BooleanField(default=False)
 
     def __str__(self):

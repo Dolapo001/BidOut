@@ -3,6 +3,8 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
+
+from users.models import User
 from .models import Auction, Bid, Category, Watchlist, Comment
 from .forms import AuctionForm
 from django.contrib import messages
@@ -39,7 +41,7 @@ def auction(request, pk):
         if request.user == auction.seller and highest_bid:
             auction_winner = highest_bid.bidder
             messages.success(request, "The auction has been closed. You are the winner!")
-        elif request.user == auction.aeller and not highest_bid:
+        elif request.user == auction.seller and not highest_bid:
             messages.info(request, "The auction has been closed, but there are no bids.")
         elif request.user == highest_bid.bidder:
             messages.info(request, "You have won this auction!")
@@ -130,26 +132,20 @@ def remove_from_watchlist(request, pk):
     return redirect('watchlist')
 
 
-
-
-@login_required(login_url="login")
+@login_required
 def close_auction(request, pk):
     auction = get_object_or_404(Auction, pk=pk)
 
-    # Check if the user is the creator of the auction
     if auction.seller != request.user:
         return HttpResponseForbidden("You are not allowed to close this auction.")
 
-    # Check if the auction is already closed
     if not auction.is_active:
         return HttpResponseBadRequest("This auction is already closed.")
 
-    # Get the highest bidder and set them as the winner
     bids = auction.bids.all()
     highest_bid = bids.order_by('-amount').first()
     if highest_bid:
         auction.winner = highest_bid.bidder
-        # Check if the current user is the winner and store the information in a session variable
         if request.user == highest_bid.bidder:
             request.session['auction_winner'] = True
         else:
@@ -157,8 +153,19 @@ def close_auction(request, pk):
     else:
         auction.winner = None
 
-    # Update the auction status as closed and save the changes
     auction.is_active = False
     auction.save()
 
     return redirect('auction_detail', pk=pk)
+
+
+def user_auctions(request, username):
+    user = get_object_or_404(User, username=username)
+    auctions = Auction.objects.filter(seller=user)
+
+    context = {
+        'user': user,
+        'auctions': auctions
+    }
+
+    return render(request, 'auctions/user_auctions.html', context)

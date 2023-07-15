@@ -8,13 +8,31 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import get_user_model
 from users.models import User
 from django.contrib.auth.models import User
-
+from auctions.models import Auction, Watchlist
 User = get_user_model()
 
 
-@login_required(login_url="login")
-def dashboard(request):
-    return render(request, "users/dashboard.html")
+@login_required
+def profile(request):
+    user = request.user
+
+    # Retrieve the number of auctions in the user's watchlist
+    watchlist_count = Watchlist.objects.filter(user=user).count()
+
+    # Retrieve the number of closed auctions
+    closed_auctions_count = Auction.objects.filter(seller=user, is_active=False).count()
+
+    # Retrieve the list of auctions won by the user
+    won_auctions = Auction.objects.filter(winner=user)
+
+    context = {
+        'user': user,
+        'watchlist_count': watchlist_count,
+        'closed_auctions_count': closed_auctions_count,
+        'won_auctions': won_auctions,
+    }
+
+    return render(request, 'users/profile.html', context)
 
 
 @csrf_protect
