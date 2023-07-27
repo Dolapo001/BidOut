@@ -45,7 +45,9 @@
                                     <p>Number of Auctions Won: {{ auctions_won_count }}</p>
                                     <ul>
                                         {% for auction in auctions_won %}
-                                            <li><a href="{% url 'user_auctions' auction.seller.username %}">{{ auction.title }}</a></li>
+                                           <li>
+                                                <a href="{% url 'auction' auction.pk %}">{{ auction.title }}</a>
+                                            </li>
                                         {% endfor %}
                                     </ul>
                                 {% else %}

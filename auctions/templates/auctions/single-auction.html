@@ -1,6 +1,13 @@
 {% extends 'main.html' %}
 
 {% block content %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="container-fluid bg-danger py-5 text-white">
         <div class="row pt-5">
             <div class="col-12 col-lg-10">
@@ -64,9 +71,10 @@
                             {% endif %}
                         {% endif %}
                     {% endif %}
+                {% else %}
+                    {% include 'auctions/auction_closed.html' %}
                 {% endif %}
             </div>
-
             {% if auction.is_closed and not auction.winner %}
                 <p class="text-danger">Auction Closed</p>
                 <p class="text-danger">The auction has ended without any bids.</p>

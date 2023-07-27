@@ -4,12 +4,6 @@ from django import forms
 from .models import Auction, Bid, Comment
 
 
-class AuctionForm(ModelForm):
-    class Meta:
-        model = Auction
-        fields = ['title', 'featured_image', 'description', 'price', 'starting_bid', 'category']
-
-
 class BidForm(ModelForm):
     class Meta:
         model = Bid
@@ -48,3 +42,16 @@ class CommentForm:
 
 
 
+class AuctionForm(ModelForm):
+    class Meta:
+        model = Auction
+        fields = ['title', 'featured_image', 'description', 'price', 'category']
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(AuctionForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})

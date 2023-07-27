@@ -6,7 +6,7 @@ from users.models import User
 from .models import Auction, Bid, Category, Watchlist, Comment
 from .forms import AuctionForm
 from django.contrib import messages
-
+from django.db.models import Count
 # Create your views here.
 
 
@@ -38,9 +38,11 @@ def auction(request, pk):
                 auction_winner = request.user
                 messages.success(request, "Congratulations! You have won this auction.")
             else:
-                return render(request, 'auctions/auction_closed.html', {'auction': auction})
+                messages.info(request, "You did not win this auction.")
         else:
-            return render(request, 'auctions/auction_closed.html', {'auction': auction})
+            messages.info(request, "The auction has been closed.")
+        return render(request, 'auctions/won_auction.html', {'auction': auction, 'auction_winner': auction_winner})
+
 
     if request.method == 'POST':
         if 'bid_amount' in request.POST:
@@ -62,8 +64,7 @@ def auction(request, pk):
             comment = Comment(auction=auction, user=request.user, text=comment_content)
             comment.save()
             messages.success(request, "Your comment has been posted successfully.")
-        return redirect('auction', pk=pk)
-
+        return redirect('auction', pk=auction.pk)
     comments = Comment.objects.filter(auction=auction)
     context = {
         'auction': auction,
@@ -72,8 +73,10 @@ def auction(request, pk):
         'num_bids': num_bids if num_bids > 0 else 'No bids yet',
         'current_bid': auction.current_bid,
         'auction_winner': auction_winner,
+        'comments': comments,
     }
     return render(request, 'auctions/single-auction.html', context)
+
 
 
 @login_required(login_url="login")
@@ -85,7 +88,6 @@ def createAuction(request):
         if form.is_valid():
             form.save()
             return redirect('auctions')
-
     context = {'form': form}
     return render(request, "auctions/auction_form.html", context)
 
@@ -145,15 +147,15 @@ def close_auction(request, pk):
                 auction.is_closed = True
                 auction.winner = highest_bid.bidder
                 auction.save()
-                return redirect('won_auction', pk=auction.id)
+                return redirect('auction', pk=auction.pk)
+
             else:
                 messages.warning(request, "The auction has no bids.")
         else:
             messages.error(request, "You are not authorized to close this auction or the auction is already closed.")
-            return redirect('auction_detail', pk=auction.id)
+            return redirect('auction', pk=auction.id)
 
     return render(request, 'auctions/close_auction.html', {'auction': auction})
-
 @login_required
 def won_auction(request, pk):
     auction = get_object_or_404(Auction, pk=pk)
