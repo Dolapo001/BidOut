@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import watchlist, add_to_watchlist, remove_from_watchlist, category_list, category_auctions, auction
+from .views import watchlist, add_to_watchlist, remove_from_watchlist, category_list, category_auctions, auction, close_auction
 
 urlpatterns = [
     path('', views.home, name="home"),
@@ -11,9 +11,11 @@ urlpatterns = [
     path('place-bid/<uuid:pk>/', views.auction, name="place-bid"),
     path('categories/', category_list, name='categories'),
     path('auction/close/<uuid:pk>/', views.close_auction, name='close_auction'),
+    path('auction/<int:pk>/won/', views.won_auction, name='won_auction'),
     path('categories/<slug:slug>/', category_auctions, name='category_auctions'),
     path('watchlist/', views.watchlist, name='watchlist'),
     path('add-to-watchlist/<uuid:pk>/', views.add_to_watchlist, name='add_to_watchlist'),
     path('remove-from-watchlist/<uuid:pk>/', views.remove_from_watchlist, name='remove_from_watchlist'),
     path('user_auctions/<str:username>/', views.user_auctions, name='user_auctions'),
-]
+    ]
+

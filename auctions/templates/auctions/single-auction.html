@@ -4,10 +4,12 @@
     <div class="container-fluid bg-danger py-5 text-white">
         <div class="row pt-5">
             <div class="col-12 col-lg-10">
-                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">Auction Listing</h1>
+                <h1 class="display-5 fw-bold ms-0 ps-0 ms-md-5 ps-md-5 pt-3">
+                    Auction Listing</h1>
             </div>
         </div>
     </div>
+
     <div class="row mx-0 mx-md-5 p-2">
         <div class="col-12 border col-md-4 text-center">
             <img src="{{ auction.featured_image.url }}" alt="auc1" class="img-fluid py-5">
@@ -19,68 +21,57 @@
 
                 <p class="fs-5">Created on: <span class="text-danger">{{ auction.start_date }}</span></p>
                 <p class="fs-5">Auction Owner: <a href="{% url 'user_auctions' auction.seller.username %}" class="text-danger">{{ auction.seller.username }}</a></p>
-
                 <p class="fs-5">Category: <span class="bidding-price text-danger">{{ auction.category }}</span></p>
                 <p class="fs-5">Bidding Price: <span class="bidding-price text-danger">${{ auction.price }}</span></p>
-                <p class="fs-5">Number of Bids: <span class="bidding-price text-danger">{{ num_bids }}</span></p>
-                <p class="fs-5">Current Bid: <span class="bidding-price text-danger">${{ auction.current_bid }}</span></p>
+                <p class="fs-5">Number of Bid(s): <span class="bidding-price text-danger">{{ num_bids }}</span></p>
+                <p class="fs-5">Current Bid: <span class="bidding-price text-danger">${{ current_bid }}</span></p>
             </div>
-            <div class="bid-control bg-light pt-3 px-3">
-                <p class="fw-bold">Place your bid now</p>
-                <p>Bid Amount:</p>
-                <form method="POST" action="{% url 'auction' pk=auction.id %}" class="d-grid gap-3">
-                    {% csrf_token %}
-                    <input type="number" name="bid_amount" id="bid-price" placeholder="$0.00" class="form-control" required>
-                    <div class="text-center text-md-start">
-                        {% for bid in bids %}
-                            <span class="border border-gray">{{ bid }}</span>
-                            <li>{{ bid.user.username }} - {{ bid.amount }}</li>
-                        {% empty %}
-                        {% endfor %}
+
+            {% if not auction.is_closed and user.is_authenticated %}
+                <div class="bid-control bg-light pt-3 px-3">
+                    <p class="fw-bold">Place your bid now</p>
+                    <p>Bid Amount:</p>
+                    <form method="POST" action="{% url 'auction' pk=auction.id %}" class="d-grid gap-3">
+                        {% csrf_token %}
+                        <input type="number" name="bid_amount" id="bid-price" placeholder="$0.00" class="form-control" required>
+
                         <div class="auction-action d-flex align-items-center justify-content-between">
-                            <a href="{% url 'place-bid' auction.id %}">
-                                <button type="submit" class="btn btn-success mb-3 px-3">Place bid</button>
-                            </a>
+                            <button type="submit" class="btn btn-success mb-3 px-3">Place bid</button>
                         </div>
-                    </div>
-                </form>
-                {% for watchlist_item in user.watchlist_auction.all %}
-                    <span class="border border-gray">{{ watchlist_item }}</span>
-                    <li>{{ watchlist_item.title }}</li>
-                {% empty %}
-                {% endfor %}
-                <form action="{% url 'add_to_watchlist' auction.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-link text-decoration-none">
+                    </form>
+
+                    <form action="{% url 'add_to_watchlist' auction.id %}" method="POST">
+                        {% csrf_token %}
                         <button type="submit" class="btn btn-success mb-3 px-3">Add to Watchlist</button>
-                    </button>
-                </form>
-            </div>
-
-
-            <div class="auction-action d-flex align-items-center justify-content-between">
-    {% if user.is_authenticated and user == auction.seller %}
-        {% if auction.is_active %}
-            <form action="{% url 'close_auction' pk=auction.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger mb-3 px-3">Close Auction</button>
-            </form>
-        {% else %}
-            <p class="text-danger">Auction Closed</p>
-            {% if request.session.auction_winner %}
-                <p class="text-success">Congratulations! You won this auction.</p>
-            {% else %}
-                <p class="text-danger">You did not win this auction.</p>
+                    </form>
+                </div>
             {% endif %}
 
-        {% endif %}
-    {% else %}
-        <!-- ... existing code ... -->
-    {% endif %}
+            <div class="auction-action d-flex align-items-center justify-content-between">
+                {% if user.is_authenticated %}
+                    {% if user == auction.seller %}
+                        {% if auction.is_active %}
+                            <form action="{% url 'close_auction' pk=auction.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger mb-3 px-3">Close Auction</button>
+                            </form>
+                        {% else %}
+                            <p class="text-danger">Auction Closed</p>
+                            {% if auction.winner == user %}
+                                <p class="text-success">Congratulations! You won this auction.</p>
+                            {% else %}
+                                <p class="text-danger">You did not win this auction.</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
             </div>
 
+            {% if auction.is_closed and not auction.winner %}
+                <p class="text-danger">Auction Closed</p>
+                <p class="text-danger">The auction has ended without any bids.</p>
+            {% endif %}
 
-            </div>
             <!-- Comment section -->
             <div class="mt-5">
                 <h2>Comments</h2>
@@ -106,4 +97,4 @@
             {% endif %}
         </div>
     </div>
-{% endblock content %}
+{% endblock %}

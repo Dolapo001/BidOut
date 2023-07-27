@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
 from users.models import User
-
+from decimal import Decimal
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -42,7 +42,15 @@ class Auction(models.Model):
     is_active = models.BooleanField(default=True)
     seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None)
     winner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='winner_auctions')
-    closed = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False)
+
+    def close_auction(self):
+        if not self.is_closed:
+            highest_bid = Bid.objects.filter(auction=self).order_by('-bid_amount').first()
+            if highest_bid:
+                self.highest_bidder = highest_bid.bidder
+            self.is_closed = True
+            self.save()
 
     def __str__(self):
         return self.title
@@ -54,13 +62,13 @@ class Auction(models.Model):
 
 
 class Bid(models.Model):
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bids")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.bidder.username} bid ${self.amount} on {self.auction.title}"
+        return f"Bid for {self.auction.title} by {self.bidder.username} - ${self.amount}"
 
 
 class Comment(models.Model):
@@ -78,5 +86,4 @@ class Watchlist(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
 
     def __str__(self):
-        def __str__(self):
-            return f"{self.user.username} - {self.auction.title}"
+        return f"{self.user.username} - {self.auction.title}"

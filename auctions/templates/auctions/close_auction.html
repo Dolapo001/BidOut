@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-body text-center">
+                        <h3>Confirm Auction Closure</h3>
+                        <p>Are you sure you want to close this auction?</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Close Auction</button>
+                            <a href="{% url 'auction' auction.id %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
