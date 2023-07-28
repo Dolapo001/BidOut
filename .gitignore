@@ -8,6 +8,7 @@ _pycache_/
 # Virtual Environment
 venv/
 myenv/
+env/
 
 # Editor and IDE Files
 .vscode/
