@@ -1,4 +1,4 @@
-#!/home/lonestarr/PycharmProjects/commerce/myenv/bin/python
+#!/home/lonestarr/PycharmProjects/commerce/myenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

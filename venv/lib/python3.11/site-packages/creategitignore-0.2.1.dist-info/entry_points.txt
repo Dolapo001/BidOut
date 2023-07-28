@@ -1,0 +1,3 @@
+[console_scripts]
+creategitignore = creategitignore:main
+
