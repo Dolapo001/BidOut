@@ -34,7 +34,7 @@ To run this project on your machine. Make sure you have python3 installed on you
 
 2. Clone the project by using the command below in your terminal
 
-`git clone https://github.com/LoneStarrD/commerce.git`
+`git clone https://github.com/LoneStarrD/BidOut`
 
 3. Change directory into the cloned repository
 
