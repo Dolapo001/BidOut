@@ -44,7 +44,7 @@
    <div class="row mx-5 mb-5 p-3">
         <!-- i think if you are gonna have multiple items, continous html blocks would be unhealthy, so you can use whater=ver function you have under your sleeves to replicate one column from  -->
         <!-- Here ...Start -->
-       {% for auction in auctions|random_sample:4 %}
+       {% for auction in auctions %}
         <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
           <div class=" p-3 auction border border-outline-1">
             <div class="auction-photo">
