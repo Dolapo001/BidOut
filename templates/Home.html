@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load filters %}
 
 {% block content %}
   <!-- Header Section -->
@@ -44,37 +45,44 @@
    <div class="row mx-5 mb-5 p-3">
         <!-- i think if you are gonna have multiple items, continous html blocks would be unhealthy, so you can use whater=ver function you have under your sleeves to replicate one column from  -->
         <!-- Here ...Start -->
-       {% for auction in auctions %}
+       {% for auction in auctions|random_sample:4 %}
         <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
           <div class=" p-3 auction border border-outline-1">
             <div class="auction-photo">
-              <a href="{% url 'auction' auction.id %}" class="auction">
               <img src="{{ auction.featured_image.url }}" alt="auction-1" class="img-fluid">
-              <p class="fw-bold auction-time text-danger bg-white m-0 p-3 mx-auto">-124D :23H : 02M : 53S</p>
-            </div>
-            <div class="auction-details">
-              <h3 class="text-start fs-4">{{ auction.featured_image.url }}</h3>
 
+            </div>
+            <div class="auction">
+                <a href="{% url 'auction_detail' pk=auction.pk %}">
+              <h3 class="text-start fs-4">{{ auction.title }}</h3>
+                </a>
               <div class="auctioner my-3 d-flex justify-content-between">
                 <div class="user d-flex align-items-center">
-                  <img src="{% static 'images/author1.png' %}" alt="auction author" class="img-fluid me-3">
-                  <p class="">By Sara Alexa</p>
+                  {% if auction.seller.username %}
+                      <p class=""><a href="{% url 'user_auctions' auction.seller.username %}">By {{ auction.seller.username }}</a></p>
+                  {% else %}
+                      <p class="">By Anonymous</p>
+                  {% endif %}
                 </div>
-
                 <h4 class="text-danger">${{ auction.price }}</h4>
               </div>
               <div class="auction-action d-flex align-items-center justify-content-between">
+                <a href="{% url 'auction_detail' pk=auction.pk %}">
+                    <button class="btn btn-md btn-danger">View Auction</button>
+                </a>
 
-                <a href="{% url 'place-bid' auction.id %}">
-                    <button class="btn btn-md btn-danger">Place a Bid</button>
+                <form action="{% url 'add_to_watchlist' auction.id %}" method="POST">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-link text-decoration-none">
+                        <button class="btn btn-md btn-danger">Add to watchlist</button>
+                    </button>
+                </form>
               </div>
-                <div class="action-btns d-flex justify-content-between">
-                  <i class="fa fa-2x text-secondary fa-solid fa-heart me-3"></i>
-                  <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
-                </div>
             </div>
           </div>
-        {% endfor %}
+        </div>
+
+          {% endfor %}
         </div>
 
     <div class="container-fluid mb-5 pb-5">
@@ -142,115 +150,7 @@
 
       </div>
     </div>
-    <!-- Upcoming Auction -->
-    <div class="container-fluid pb-5">
-      <div class="row mx-5 mb-5">
-        <div class="col-12 col-lg-7">
-          <h1>Upcoming Auctions</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum tempore possimus consectetur laboriosam excepturi eveniet non quaerat nulla voluptatem praesentium</p>
-        </div>
-      </div>
 
-      <div class="row m-5">
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="upcoming-item border border-outline-1">
-            <div class="issue ">
-              <!-- image should be here...not literally -->
-              <img src="{% static 'images/umcoming2.png' %}" alt="upcoming 1" class="img-fluid w-100">
-
-              <div class="upcoming-timer text-center bg-black text-white d-flex justify-content-center px-3 py-2">
-                <div class="days col"><b>-125</b><br>Days</div>
-                <div class="days col"><b>23</b><br>Hours</div>
-                <div class="days col"><b>02</b><br>Mins</div>
-                <div class="days col"><b>53</b><br>Secs</div>
-              </div>
-
-            </div>
-            <div class="issue-desc px-2 pt-2">
-              <div class="upcoming-author px-2 py-2">
-                 <img src="{% static 'images/upcoming-author1.png' %}" alt="upcoming author" class=" px-2 pb-1 pt-2 img-fluid">
-                <p class="fw-bold">Time Zone</p>
-                <h4>Christian Louboutin Size 45</h4>
-                <p class="">Bidding Price: <b class="text-danger fw-bold fs-4">$10.89</b> </p>
-                <div class="auction-action d-flex align-items-center justify-content-between mb-4">
-
-                  <button class="btn btn-md btn-danger">View Details</button>
-
-                  <div class="action-btns d-flex justify-content-between">
-                    <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="upcoming-item border border-outline-1">
-            <div class="issue ">
-              <!-- image should be here...not literally -->
-              <img src="{% static 'images/umcoming3.png' %}" alt="upcoming 1" class="img-fluid w-100">
-
-              <div class="upcoming-timer text-center bg-black text-white d-flex justify-content-center px-3 py-2">
-                <div class="days col"><b>-125</b><br>Days</div>
-                <div class="days col"><b>23</b><br>Hours</div>
-                <div class="days col"><b>02</b><br>Mins</div>
-                <div class="days col"><b>53</b><br>Secs</div>
-              </div>
-
-            </div>
-            <div class="issue-desc px-2 pt-2">
-              <div class="upcoming-author px-2 py-2">
-                <img src="{% static 'images/upcoming-author2.png' %}" alt="upcoming author" class=" px-2 pb-1 pt-2 img-fluid">
-                <p class="fw-bold">Time Zone</p>
-                <h4>Yamaha Accelerate Two 600hp</h4>
-                <p class="">Bidding Price: <b class="text-danger fw-bold fs-4">$200.99</b> </p>
-                <div class="auction-action d-flex align-items-center justify-content-between mb-4">
-
-                  <button class="btn btn-md btn-danger">View Details</button>
-
-                  <div class="action-btns d-flex justify-content-between">
-                    <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="upcoming-item border border-outline-1">
-            <div class="issue ">
-              <!-- image should be here...not literally -->
-              <img src=".{% static 'images/umcoming1.png' %}" alt="upcoming 1" class="img-fluid w-100">
-
-              <div class="upcoming-timer text-center bg-black text-white d-flex justify-content-center px-3 py-2">
-                <div class="days col"><b>-125</b><br>Days</div>
-                <div class="days col"><b>23</b><br>Hours</div>
-                <div class="days col"><b>02</b><br>Mins</div>
-                <div class="days col"><b>53</b><br>Secs</div>
-              </div>
-
-            </div>
-            <div class="issue-desc px-2 pt-2">
-              <div class="upcoming-author px-2 py-2">
-                <img src="{% static 'images/upcoming-author3.png' %}" alt="upcoming author" class=" px-2 pb-1 pt-2 img-fluid">
-                <p class="fw-bold">Time Zone</p>
-                <h4>Micheal Kors Watch m2016</h4>
-                <p class="">Bidding Price: <b class="text-danger fw-bold fs-4">$15.99</b> </p>
-                <div class="auction-action d-flex align-items-center justify-content-between mb-4">
-
-                  <button class="btn btn-md btn-danger">View Details</button>
-                  <div class="action-btns d-flex justify-content-between">
-                    <i class="fa fa-2x  fa-solid fa-ellipsis-v"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
 
          <!-- Trustees -->
     <div class="container-fluid trustees pb-5 mb-5">
