@@ -1,4 +1,4 @@
-# Commerce 
+# BidOut 
 
 Commerce is an auction ecommerce website similar to Ebay where users can list items and put them up for auction and whoever has the highest bid for that particular auctions wins the item
 
@@ -70,3 +70,9 @@ To run this project on your machine. Make sure you have python3 installed on you
 
 Use the superuser account credentials to log in to the admin interface at http://localhost:8000/admin/ and manage the platform content.
 
+## Preview
+
+<img src="/home/lonestarr/Pictures/bidout2.png"/>
+
+
+![](/home/lonestarr/Pictures/bidout1.png)
