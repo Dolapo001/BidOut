@@ -4,30 +4,13 @@ Commerce is an auction ecommerce website similar to Ebay where users can list it
 
 ## **Technologies used**
 
-### * Python
-
-<img src="/home/lonestarr/Downloads/rsz_python.png"/>
-
-### * Django 
-
-<img src="/home/lonestarr/Downloads/rsz_django.png"/>
-
-### * HTML
-
-![](/home/lonestarr/Downloads/rsz_html.png)
-
-### * CSS
-
-![](/home/lonestarr/Downloads/rsz_css.png)
-
-### * Javascript
-
-![](/home/lonestarr/Downloads/rsz_js.png)
+* Python
+* Django
+* HTML
+* CSS
+* Javascript
 
 ### * SQlite3
-
-<img height="82" src="/home/lonestarr/Downloads/SQLite_logo-1024x576.png" width="82"/>
-
 ## Users are able to:
 
 1. Create account
