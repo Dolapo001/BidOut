@@ -3,11 +3,30 @@
 Commerce is an auction ecommerce website similar to Ebay where users can list items and put them up for auction and whoever has the highest bid for that particular auctions wins the item
 
 ## **Technologies used**
-* Python
-* Django 
-* HTML/CSS
-* Javascript
-* SQlite3
+
+### * Python
+
+<img src="/home/lonestarr/Downloads/rsz_python.png"/>
+
+### * Django 
+
+<img src="/home/lonestarr/Downloads/rsz_django.png"/>
+
+### * HTML
+
+![](/home/lonestarr/Downloads/rsz_html.png)
+
+### * CSS
+
+![](/home/lonestarr/Downloads/rsz_css.png)
+
+### * Javascript
+
+![](/home/lonestarr/Downloads/rsz_js.png)
+
+### * SQlite3
+
+<img height="82" src="/home/lonestarr/Downloads/SQLite_logo-1024x576.png" width="82"/>
 
 ## Users are able to:
 
@@ -36,4 +55,35 @@ To run this project on your machine. Make sure you have python3 installed on you
 
 3. Change directory into the cloned repository
 
-cd commerce
+`cd commerce`
+
+4. Create and Activate Virtual Environment: 
+
+`python -m venv env`
+
+* On Windows, activate the virtual environment:
+
+`env\Scripts\activate`
+
+* On macOS and Linux, activate the virtual environment:
+
+`source env/bin/activate`
+
+5. Install Dependencies:
+
+`pip install -r requirements.txt`
+
+6. Run Database Migrations:
+
+`python manage.py migrate`
+
+7. Create Superuser Account:
+
+`python manage.py createsuperuser`
+
+8. Start the Development Server:
+
+`python manage.py runserver`
+
+Use the superuser account credentials to log in to the admin interface at http://localhost:8000/admin/ and manage the platform content.
+
