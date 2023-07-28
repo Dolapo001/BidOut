@@ -72,7 +72,7 @@ Use the superuser account credentials to log in to the admin interface at http:/
 
 ## Preview
 
-<img src="/home/lonestarr/Pictures/bidout2.png"/>
+![](/bidout2.png)
 
 
-![](/home/lonestarr/Pictures/bidout1.png)
+![](/bidout1.png)
