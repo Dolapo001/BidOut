@@ -6,8 +6,8 @@ __pycache__/
 
 
 # Virtual Environment
-venv/
-myenv/
+.venv/
+.myenv/
 
 # Editor and IDE Files
 .vscode/
@@ -42,3 +42,9 @@ Thumbs.db
 
 # Database Files
 *.db
+
+
+# Django stuff:
+local_settings.py
+db.sqlite3/
+db.sqlite3-journal
