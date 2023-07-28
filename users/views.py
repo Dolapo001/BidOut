@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from auctions.models import Auction, Watchlist
 User = get_user_model()
 
+
 @login_required(login_url="login")
 def profile(request):
     user = request.user
