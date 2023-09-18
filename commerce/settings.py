@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-g53pv&@hu#i3t2tid@ln)q@oh72_77@1dw-e==$(g^ni-4t((i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
+
 ALLOWED_HOSTS = ['localhost', 'bidout.up.railway.app', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://bidout.up.railway.app']
 
@@ -130,14 +131,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = '/images/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     (BASE_DIR / 'static')
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
