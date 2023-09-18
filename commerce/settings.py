@@ -26,12 +26,19 @@ SECRET_KEY = 'django-insecure-g53pv&@hu#i3t2tid@ln)q@oh72_77@1dw-e==$(g^ni-4t((i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['localhost', 'bidout-production.up.railway.app', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://bidout-production.up.railway.app']
+ALLOWED_HOSTS = ['localhost', 'bidout.up.railway.app', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://bidout.up.railway.app']
 
 
-db_from_venv = dj_database_url.config(conn_max_age=500)
+# Get the DATABASE_URL environment variable
+DATABASE_URL = os.getenv('DATABASE_URL')
 
+# Configure the database using dj-database-url
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500)
+
+DATABASES = {
+    'default': db_from_env
+}
 
 # Application definition
 
