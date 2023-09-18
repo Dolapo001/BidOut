@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-g53pv&@hu#i3t2tid@ln)q@oh72_77@1dw-e==$(g^ni-4t((i
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-ALLOWED_HOSTS = ['localhost', 'bidout.up.railway.app', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', 'https://bidout.up.railway.app/', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://bidout.up.railway.app']
 
 
