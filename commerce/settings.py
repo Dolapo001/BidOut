@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-g53pv&@hu#i3t2tid@ln)q@oh72_77@1dw-e==$(g^ni-4t((i
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['localhost', 'bidout-production.up.railway.app', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://bidout-production.up.railway.app']
 
 
 db_from_venv = dj_database_url.config(conn_max_age=500)
@@ -58,8 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-
 
 
 ROOT_URLCONF = 'commerce.urls'
