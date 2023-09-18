@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g53pv&@hu#i3t2tid@ln)q@oh72_77@1dw-e==$(g^ni-4t((i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'bidout-production.up.railway.app', '127.0.0.1']
 
