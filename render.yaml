@@ -1,0 +1,6 @@
+services:
+  - name: task_one
+    type: web
+    env: python3
+    buildCommand: ./build.sh
+    startCommand: gunicorn commerce.wsgi:application
