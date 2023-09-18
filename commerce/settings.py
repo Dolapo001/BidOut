@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'auctions.apps.AuctionsConfig',
     'users.apps.UsersConfig',
-    'autoslug',
-    'signal'
+    'autoslug'
 
 ]
 AUTH_USER_MODEL = 'users.User'

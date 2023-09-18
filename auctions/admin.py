@@ -1,8 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Auction, Bid, Comment
+from .models import Auction, Bid, Comment, Category
 
-admin.site.register(Auction)
-admin.site.register(Bid)
-admin.site.register(Comment)
+admin.site.register([
+    Auction,
+    Bid,
+    Comment,
+    Category
+])

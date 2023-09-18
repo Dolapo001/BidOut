@@ -1,6 +1,11 @@
 asgiref==3.7.2
+beautifulsoup4==4.12.2
+colorama==0.4.6
+creategitignore==0.2.1
 Django==4.2.3
 django-autoslug==1.9.9
 Pillow==10.0.0
+soupsieve==2.4.1
 sqlparse==0.4.4
+utils==1.0.1
 whitenoise==6.5.0
