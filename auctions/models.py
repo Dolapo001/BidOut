@@ -11,6 +11,8 @@ from decimal import Decimal
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = AutoSlugField(populate_from='name', unique=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
 
     class Meta:
         verbose_name = "Category"
