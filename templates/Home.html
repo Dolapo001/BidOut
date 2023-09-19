@@ -47,11 +47,12 @@
        {% for auction in auctions %}
         <div class="col-12 col-md-6 col-lg-4 p-3 auction-card  text-center">
           <div class=" p-3 auction border border-outline-1">
+
             <div class="auction-photo">
               <img src="{{ auction.featured_image.url }}" alt="auction-1" class="img-fluid">
 
             </div>
-            <div class="auction">
+            <div class="auction-details">
                 <a href="{% url 'auction_detail' pk=auction.pk %}">
               <h3 class="text-start fs-4">{{ auction.title }}</h3>
                 </a>
