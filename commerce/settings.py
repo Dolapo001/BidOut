@@ -46,7 +46,7 @@ SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'bidout.up.railway.app', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ["http://bidout.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://bidout.up.railway.app"]
 
 
 
