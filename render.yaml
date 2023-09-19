@@ -1,6 +1,0 @@
-services:
-  - name: BidOut
-    type: web
-    env: python3
-    buildCommand: ./Procfile
-    startCommand: gunicorn commerce.wsgi:application
