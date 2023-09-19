@@ -32,22 +32,9 @@ a{
     
 }
 .auction-photo{
+    transition-duration: 1.5;
     transition-property: all;
 }
-
-.auction-photo {
-    width: 370px; /* Set the desired width */
-    height: 245px; /* Set the desired height */
-}
-.auction-photo img {
-    width: 100%; /* Make the image take up 100% of the container's width */
-    height: 100%; /* Make the image take up 100% of the container's height */
-}
-
-.auction-photo{
-    transition-duration:1.5;
-}
-
 .auction-time{
     transform: translateY(-50%);
     width: 65%;
@@ -85,4 +72,3 @@ a{
 .signup-form, .login-form{
     box-shadow: 5px 2px 20px rgb(0 0 0 / 4%);
 }
-
