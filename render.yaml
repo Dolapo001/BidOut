@@ -1,6 +1,6 @@
 services:
-  - name: task_one
+  - name: BidOut
     type: web
     env: python3
-    buildCommand: ./build.sh
+    buildCommand: ./Procfile
     startCommand: gunicorn commerce.wsgi:application
