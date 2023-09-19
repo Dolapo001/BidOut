@@ -24,11 +24,18 @@ os.environ['DATABASE_URL'] = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@contain
 db_from_env = dj_database_url.config(default=DATABASES, conn_max_age=500)
 
 DATABASES = {
-    'default': db_from_env
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'UJXD4YtjP547VXMMYo0x',
+        'HOST': 'containers-us-west-47.railway.app',
+        'PORT': '6905',
+    }
 }
 
 # Get the DATABASE_URL environment variable
-DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@containers-us-west-47.railway.app:6905/railway'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9299e3a6fef66192e0c246efc386aff9094'
