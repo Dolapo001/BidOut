@@ -14,6 +14,8 @@ from pathlib import Path
 import dj_database_url
 import os
 
+import export as export
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,18 +23,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g53pv&@hu#i3t2tid@ln)q@oh72_77@1dw-e==$(g^ni-4t((i'
+SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9299e3a6fef66192e0c246efc386aff9094'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-
+#DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'https://bidout.up.railway.app/', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://bidout.up.railway.app']
 
 
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+
 # Get the DATABASE_URL environment variable
-DATABASE_URL = os.getenv('DATABASE_URL')
+
+export
+DATABASE_URL = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@containers-us-west-47.railway.app:6905/railway'
+
 
 # Configure the database using dj-database-url
 db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500)
@@ -132,7 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
     (BASE_DIR / 'static')
