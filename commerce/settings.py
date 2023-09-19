@@ -14,13 +14,21 @@ from pathlib import Path
 import dj_database_url
 import os
 
-import export as export
+from django.conf.global_settings import DATABASES
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+os.environ['DATABASE_URL'] = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@containers-us-west-47.railway.app:6905/railway'
+db_from_env = dj_database_url.config(default=DATABASES, conn_max_age=500)
+
+DATABASES = {
+    'default': db_from_env
+}
+
+# Get the DATABASE_URL environment variable
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9299e3a6fef66192e0c246efc386aff9094'
@@ -41,18 +49,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 
-# Get the DATABASE_URL environment variable
-
-export
-DATABASE_URL = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@containers-us-west-47.railway.app:6905/railway'
-
-
-# Configure the database using dj-database-url
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500)
-
-DATABASES = {
-    'default': db_from_env
-}
 
 # Application definition
 
@@ -105,12 +101,12 @@ WSGI_APPLICATION = 'commerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES = {
+    #'default': {
+       # 'ENGINE': 'django.db.backends.sqlite3',
+       # 'NAME': BASE_DIR / 'db.sqlite3',
+ #   }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
