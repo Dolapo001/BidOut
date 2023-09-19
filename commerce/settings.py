@@ -42,7 +42,8 @@ SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+#DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'bidout.up.railway.app', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ["http://bidout.up.railway.app"]
