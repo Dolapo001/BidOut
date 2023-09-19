@@ -48,6 +48,13 @@ ALLOWED_HOSTS = ['localhost', 'https://bidout.up.railway.app/', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://bidout.up.railway.app']
 
 
+SECURE_HSTS_SECONDS = 31536000
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
+
 
 
 # Application definition
@@ -59,7 +66,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'auctions.apps.AuctionsConfig',
     'users.apps.UsersConfig',
     'autoslug'
