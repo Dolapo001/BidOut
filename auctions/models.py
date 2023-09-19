@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from users.models import User
 from decimal import Decimal
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = AutoSlugField(populate_from='name', unique=True)
