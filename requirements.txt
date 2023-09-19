@@ -4,7 +4,7 @@ colorama==0.4.6
 creategitignore==0.2.1
 databases==0.8.0
 dj-database-url==2.1.0
-Django==4.2.3
+Django==3.2.21
 django-autoslug==1.9.9
 greenlet==2.0.2
 gunicorn==21.2.0
