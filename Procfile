@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py makemigrations && python manage.py create_superadmin lonestarr mysecretpassword && gunicorn commerce.wsgi
+web: python manage.py migrate && python manage.py create_superadmin LoneStarrD mysecretpassword && gunicorn commerce.wsgi
