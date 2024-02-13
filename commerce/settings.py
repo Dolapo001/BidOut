@@ -34,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'neondb',
+    'NAME': 'bidout',
     'USER': 'adedolapovictoria927',
     'PASSWORD': '4aYKfmhLsn8A',
     'HOST': 'ep-morning-sun-07860737.us-east-2.aws.neon.tech',
