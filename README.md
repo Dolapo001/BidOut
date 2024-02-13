@@ -10,6 +10,7 @@ Commerce is an auction ecommerce website similar to Ebay where users can list it
 * CSS
 * Javascript
 * SQlite3
+* Neon.db
 
 ## Users are able to:
 
