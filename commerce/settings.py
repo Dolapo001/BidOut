@@ -14,24 +14,33 @@ from pathlib import Path
 import dj_database_url
 import os
 
-from django.conf.global_settings import DATABASES
+#from django.conf.global_settings import DATABASES
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-os.environ['DATABASE_URL'] = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@containers-us-west-47.railway.app:6905/railway'
-db_from_env = dj_database_url.config(default=DATABASES, conn_max_age=500)
+#os.environ['DATABASE_URL'] = 'postgresql://postgres:UJXD4YtjP547VXMMYo0x@containers-us-west-47.railway.app:6905/railway'
+#db_from_env = dj_database_url.config(default=DATABASES, conn_max_age=500)
+
+
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': BASE_DIR / 'db.sqlite3',
+    #}
+#}
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'UJXD4YtjP547VXMMYo0x',
-        'HOST': 'containers-us-west-47.railway.app',
-        'PORT': '6905',
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'neondb',
+    'USER': 'adedolapovictoria927',
+    'PASSWORD': '4aYKfmhLsn8A',
+    'HOST': 'ep-morning-sun-07860737.us-east-2.aws.neon.tech',
+    'PORT': '5432',
+    'OPTIONS': {'sslmode': 'require'},
+  }
 }
 
 # Get the DATABASE_URL environment variable
@@ -43,7 +52,7 @@ SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9
 # SECURITY WARNING: don't run with debug turned on in production!
 
 #DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1']
 #CSRF_TRUSTED_ORIGINS = ["https://bidout.up.railway.app"]
