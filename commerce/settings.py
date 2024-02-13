@@ -45,17 +45,16 @@ SECRET_KEY = 'fe0574d6a2c2b66c231f5b356252578cb359acda0969465156073273f6da096aa9
 #DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'bidout.up.railway.app', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ["https://bidout.up.railway.app"]
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1']
+#CSRF_TRUSTED_ORIGINS = ["https://bidout.up.railway.app"]
 
 
-
-SECURE_HSTS_SECONDS = 31536000
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
+#SECURE_HSTS_SECONDS = 31536000
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 
 
 
@@ -149,14 +148,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", 'static')
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
-
 STATICFILES_DIRS = [
-    (BASE_DIR / 'static')
+    os.path.join(BASE_DIR, "static"),
 ]
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

@@ -24,7 +24,7 @@ def auctions(request):
     context = {'auctions': auctions}
     return render(request, 'auctions/auctions.html', context)
 
-
+@login_required(login_url="login")
 def auction(request, pk):
     auction = get_object_or_404(Auction, pk=pk)
     bids = auction.bids.all()
@@ -168,7 +168,7 @@ def won_auction(request, pk):
 
     return redirect('auction_detail', pk=pk)
 
-
+@login_required(login_url="login")
 def user_auctions(request, username):
     user = get_object_or_404(User, username=username)
     auctions = Auction.objects.filter(seller=user)
